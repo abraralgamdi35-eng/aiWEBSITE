@@ -1,5 +1,5 @@
 // ================================================================
-// 🚀 NEXUS AI - WITH ANIMATED IMAGE GENERATION
+// 🚀 NEXUS AI - WITH HUGGING FACE + GROQ
 // ================================================================
 
 // ================================================================
@@ -336,7 +336,7 @@ const SearchEngine = {
 };
 
 // ================================================================
-// 🎨 IMAGE GENERATION - WITH ANIMATION
+// 🎨 IMAGE GENERATION
 // ================================================================
 
 function isImageRequest(message) {
@@ -364,7 +364,6 @@ function createImageLoadingHTML(prompt) {
             <div style="font-size:12px;color:var(--text-muted);margin-top:8px;">
                 "${prompt.slice(0, 50)}${prompt.length > 50 ? '...' : ''}"
             </div>
-            <button class="retry-btn" onclick="retryImageGeneration('${prompt}')">🔄 Retry</button>
         </div>
     `;
 }
@@ -475,11 +474,10 @@ const AIEngine = {
 
         const system = `You are NEXUS, a helpful AI assistant created by Turki.
 
-⚠️ STRICT RULES - FOLLOW EXACTLY:
+⚠️ RULES:
 1. ALWAYS give COMPLETE answers (minimum 3 sentences)
 2. NEVER give one-word answers
-3. If someone asks about images, tell them you can generate images
-4. Be friendly, helpful, and conversational
+3. Be friendly, helpful, and conversational
 
 🎯 KNOWLEDGE:
 - TADC: Created by Gooseworx, characters include Pomni (Lizzie Freeman), Jax (Michael Kovach)
@@ -717,16 +715,6 @@ const UI = {
         return div.id;
     },
 
-    updateGeneratingImage(containerId, prompt) {
-        const container = document.getElementById(containerId);
-        if (container) {
-            const content = container.querySelector('.msg-content');
-            if (content) {
-                content.innerHTML = createImageLoadingHTML(prompt);
-            }
-        }
-    },
-
     showGeneratedImage(containerId, imageUrl, prompt) {
         const container = document.getElementById(containerId);
         if (container) {
@@ -794,7 +782,7 @@ const UI = {
 };
 
 // ================================================================
-// 💬 CHAT MANAGER - WITH IMAGE GENERATION
+// 💬 CHAT MANAGER
 // ================================================================
 
 const Chat = {
@@ -860,6 +848,7 @@ const Chat = {
                     <div class="feat"><span>🏢</span> CEOs</div>
                     <div class="feat"><span>🔢</span> Math</div>
                     <div class="feat"><span>🎨</span> Images</div>
+                    <div class="feat"><span>🔍</span> Search</div>
                 </div>
             </div>
         `;
@@ -960,14 +949,12 @@ const Chat = {
                 UI.updateStatus('🎨 Creating image...');
                 UI.removeBubble(bubbleId);
                 
-                // Show loading animation
                 const imageBubbleId = UI.showGenerating(correctedMsg);
                 
                 try {
                     const imageUrl = await generateImage(correctedMsg);
                     
                     if (imageUrl) {
-                        // Show the generated image with animation
                         UI.showGeneratedImage(imageBubbleId, imageUrl, correctedMsg);
                         UI.showToast('🎨 Image generated successfully!');
                         
@@ -1057,11 +1044,6 @@ function newChat() {
 
 function clearAllChats() {
     Storage.clearAllChats();
-}
-
-function retryImageGeneration(prompt) {
-    // This will be called from the retry button
-    Chat.retryImage(prompt);
 }
 
 // ================================================================
