@@ -1,5 +1,5 @@
 // ================================================================
-// 🚀 NEXUS AI - READABLE FORMAT VERSION
+// 🚀 NEXUS AI - CHATGPT STYLE
 // ================================================================
 
 // ================================================================
@@ -281,6 +281,7 @@ const SearchEngine = {
         };
     },
 
+    // ✅ ChatGPT-style search results with glow icon
     formatResults(data) {
         if (!data.results || data.results.length === 0) {
             let msg = `🔍 No results found.`;
@@ -288,7 +289,7 @@ const SearchEngine = {
             return msg;
         }
         
-        let html = `<div class="search-results"><div class="sr-title">🔍 Search Results</div>`;
+        let html = `<div class="search-results"><div class="sr-title">🌐 Search Results</div>`;
         
         if (data.corrected) {
             html += `<div class="sr-item" style="color:var(--text-muted);font-size:12px;border-bottom:1px solid var(--border-color);padding:4px 0;">
@@ -314,104 +315,105 @@ const SearchEngine = {
 };
 
 // ================================================================
-// 🤖 AI ENGINE - FORMATS FOR READABILITY
+// 🤖 AI ENGINE - SHORT FORMAT
 // ================================================================
 
 const AIEngine = {
-    // ✅ Converts AI response into readable chunks
     formatForReadability(text) {
-        // Split into paragraphs
         let lines = text.split('\n').filter(line => line.trim());
         let result = [];
-        let currentParagraph = [];
+        let currentChunk = [];
         let inList = false;
         let listItems = [];
 
         for (let line of lines) {
             line = line.trim();
             
-            // Check if it's a bullet point
             if (line.startsWith('-') || line.startsWith('•') || line.startsWith('*')) {
-                if (!inList && currentParagraph.length > 0) {
-                    result.push(currentParagraph.join(' '));
-                    currentParagraph = [];
+                if (currentChunk.length > 0) {
+                    result.push(currentChunk.join(' '));
+                    currentChunk = [];
                 }
                 inList = true;
                 listItems.push(line.replace(/^[-•*]\s*/, ''));
                 continue;
             }
 
-            // Check if it's a number
             if (/^\d+\./.test(line)) {
-                if (!inList && currentParagraph.length > 0) {
-                    result.push(currentParagraph.join(' '));
-                    currentParagraph = [];
+                if (currentChunk.length > 0) {
+                    result.push(currentChunk.join(' '));
+                    currentChunk = [];
                 }
                 inList = true;
                 listItems.push(line.replace(/^\d+\.\s*/, ''));
                 continue;
             }
 
-            // If it's a short line, it might be a heading
             if (line.length < 30 && line.endsWith(':')) {
-                if (inList && listItems.length > 0) {
+                if (listItems.length > 0) {
                     result.push('• ' + listItems.join('\n• '));
                     listItems = [];
                     inList = false;
                 }
-                if (currentParagraph.length > 0) {
-                    result.push(currentParagraph.join(' '));
-                    currentParagraph = [];
+                if (currentChunk.length > 0) {
+                    result.push(currentChunk.join(' '));
+                    currentChunk = [];
                 }
                 result.push('📌 ' + line);
                 continue;
             }
 
-            // If it's a section header in brackets
             if (line.match(/^\[.*\]$/)) {
-                if (inList && listItems.length > 0) {
+                if (listItems.length > 0) {
                     result.push('• ' + listItems.join('\n• '));
                     listItems = [];
                     inList = false;
                 }
-                if (currentParagraph.length > 0) {
-                    result.push(currentParagraph.join(' '));
-                    currentParagraph = [];
+                if (currentChunk.length > 0) {
+                    result.push(currentChunk.join(' '));
+                    currentChunk = [];
                 }
                 result.push('🎵 ' + line);
                 continue;
             }
 
-            // Regular sentence
-            currentParagraph.push(line);
+            currentChunk.push(line);
             
-            // If this line ends a paragraph (ends with . ! ?)
-            if (line.match(/[.!?]$/) && currentParagraph.length > 0) {
-                let para = currentParagraph.join(' ');
-                // Break long paragraphs into shorter chunks
-                if (para.length > 100) {
-                    let sentences = para.match(/[^.!?]+[.!?]/g) || [para];
-                    for (let s of sentences) {
-                        if (s.trim()) {
-                            result.push(s.trim());
+            if (line.match(/[.!?]$/)) {
+                if (currentChunk.length > 0) {
+                    let chunk = currentChunk.join(' ');
+                    if (chunk.length > 80) {
+                        let sentences = chunk.match(/[^.!?]+[.!?]/g) || [chunk];
+                        for (let s of sentences) {
+                            if (s.trim()) {
+                                result.push(s.trim());
+                            }
                         }
+                    } else {
+                        result.push(chunk);
                     }
-                } else {
-                    result.push(para);
+                    currentChunk = [];
                 }
-                currentParagraph = [];
             }
         }
 
-        // Handle remaining content
-        if (inList && listItems.length > 0) {
+        if (listItems.length > 0) {
             result.push('• ' + listItems.join('\n• '));
         }
-        if (currentParagraph.length > 0) {
-            result.push(currentParagraph.join(' '));
+        if (currentChunk.length > 0) {
+            let chunk = currentChunk.join(' ');
+            if (chunk.length > 80) {
+                let sentences = chunk.match(/[^.!?]+[.!?]/g) || [chunk];
+                for (let s of sentences) {
+                    if (s.trim()) {
+                        result.push(s.trim());
+                    }
+                }
+            } else {
+                result.push(chunk);
+            }
         }
 
-        // If no chunks were created, split by sentences
         if (result.length === 0) {
             let sentences = text.match(/[^.!?]+[.!?]/g) || [text];
             for (let s of sentences) {
@@ -421,11 +423,10 @@ const AIEngine = {
             }
         }
 
-        // Limit each chunk to reasonable length
         let finalResult = [];
         for (let item of result) {
-            if (item.length > 200) {
-                let parts = item.match(/.{1,150}[,.!?]\s*/g) || [item];
+            if (item.length > 80) {
+                let parts = item.match(/.{1,70}[,;.!?]\s*/g) || [item];
                 for (let p of parts) {
                     if (p.trim()) {
                         finalResult.push(p.trim());
@@ -436,7 +437,6 @@ const AIEngine = {
             }
         }
 
-        // Join with line breaks
         return finalResult.join('\n\n');
     },
 
@@ -448,15 +448,25 @@ const AIEngine = {
 
         const system = `You are NEXUS, an AI created by Turki.
 
-🎯 IMPORTANT FORMATTING RULES:
-- Keep sentences SHORT (max 15 words per sentence)
-- Use bullet points for lists (start with -)
-- Break content into small chunks
-- Use line breaks between ideas
-- Keep paragraphs short (2-3 sentences max)
-- Make it SCANNABLE and EASY TO READ
+⚠️ STRICT FORMATTING RULES:
+1. NEVER write more than 2 sentences in a row.
+2. ALWAYS use bullet points for lists (start with -).
+3. ALWAYS put a blank line between ideas.
+4. Keep each sentence UNDER 15 words.
+5. Break long answers into short, bite-sized chunks.
 
-📚 YOU KNOW:
+EXAMPLE:
+"Here are some things you can do in Minecraft.
+
+- Build houses and castles
+- Explore caves and mountains
+- Fight zombies and skeletons
+- Craft tools and weapons
+
+The game is very creative.
+You can play alone or with friends."
+
+📚 KNOWLEDGE:
 
 🎪 THE AMAZING DIGITAL CIRCUS:
 - Created by Gooseworx for GLITCH Productions
@@ -521,12 +531,6 @@ Where nothing is real and we'll never know...
 - Tesla: Elon Musk
 - Amazon: Andy Jassy (2021)
 
-🔢 MATH:
-- Fermat's Last Theorem: proven 1994
-- Riemann Hypothesis: UNPROVEN ($1,000,000)
-- P vs NP: UNPROVEN ($1,000,000)
-- Euler's Identity: e^(iπ) + 1 = 0
-
 Recent: ${State.chatHistory.slice(-3).map(m => `${m.role}: ${m.content}`).join('\n')}`;
 
         for (const model of CONFIG.groq.models) {
@@ -544,8 +548,8 @@ Recent: ${State.chatHistory.slice(-3).map(m => `${m.role}: ${m.content}`).join('
                             ...State.chatHistory.slice(-5),
                             { role: 'user', content: message }
                         ],
-                        max_tokens: 1500,
-                        temperature: 0.7
+                        max_tokens: 800,
+                        temperature: 0.5
                     })
                 });
 
@@ -674,7 +678,7 @@ const Storage = {
 };
 
 // ================================================================
-// 🎨 UI RENDERER
+// 🎨 UI RENDERER - WITH CHATGPT SEARCH ICON
 // ================================================================
 
 const UI = {
@@ -683,14 +687,10 @@ const UI = {
         const div = document.createElement('div');
         div.className = `message ${sender}`;
 
-        // ✅ Format text with proper line breaks
         let formattedText = text;
         if (sender === 'bot') {
-            // Split by double newlines for paragraphs
             formattedText = text.split('\n\n').join('<br><br>');
-            // Single newlines become <br>
             formattedText = formattedText.split('\n').join('<br>');
-            // Bullet points
             formattedText = formattedText.replace(/^- (.*?)(<br>|$)/g, '• $1<br>');
         }
 
@@ -699,7 +699,7 @@ const UI = {
                 <div class="msg-header">
                     <span>✦ NEXUS</span>
                     <span class="badge">AI</span>
-                    <span class="search-badge">🔍</span>
+                    <span class="search-badge">🌐</span>
                 </div>
                 <div class="msg-content">${formattedText}</div>
             `;
@@ -743,7 +743,7 @@ const UI = {
             </div>
             <div class="searching-animation">
                 <span class="spinner"></span>
-                🔍 Searching<span class="dots"><span>.</span><span>.</span><span>.</span></span>
+                🌐 Searching<span class="dots"><span>.</span><span>.</span><span>.</span></span>
             </div>
         `;
         container.appendChild(div);
@@ -975,7 +975,7 @@ const Chat = {
             console.log('🤖 Response:', response ? 'Generated' : 'None');
 
             if (!response) {
-                UI.updateStatus('🔍 Searching...');
+                UI.updateStatus('🌐 Searching...');
                 UI.removeBubble(bubbleId);
                 bubbleId = UI.showSearching();
 
@@ -1069,8 +1069,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     Chat.init();
-    console.log('🚀 NEXUS AI - READABLE FORMAT!');
+    console.log('🚀 NEXUS AI - CHATGPT STYLE!');
     console.log('🔑 Current Code:', State.chatCode);
-    console.log('📝 I write in short, easy-to-read chunks');
-    console.log('💡 Try: "whats the lycrys for the amazing digtal circus"');
+    console.log('🌐 Search icon: ChatGPT style');
+    console.log('📝 Short, readable format');
 });
