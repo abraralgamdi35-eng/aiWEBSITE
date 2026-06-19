@@ -1,5 +1,5 @@
 // ================================================================
-// 🚀 NEXUS AI - FORCED SHORT FORMAT
+// 🚀 NEXUS AI - COMPLETE RECODE
 // ================================================================
 
 // ================================================================
@@ -26,14 +26,30 @@ const CONFIG = {
 
 const Safety = {
     blockedTopics: {
-        'hack': { response: "🔒 I can't provide hacking instructions.\n\nHere are some tips to keep your accounts safe:\n- Use strong passwords\n- Enable two-factor authentication\n- Avoid suspicious links" },
-        'phishing': { response: "🎣 Phishing is serious.\n\nProtect yourself:\n- Never click suspicious links\n- Always verify sender emails\n- Use email filters" },
-        'crack': { response: "💻 Software security tips:\n\n- Download from official sources\n- Keep software updated\n- Use antivirus protection" },
-        'brute force': { response: "🛡️ Protect against brute force:\n\n- Use strong passwords\n- Enable account lockout\n- Use rate limiting" },
-        'keylog': { response: "⌨️ Protect against keyloggers:\n\n- Use antivirus software\n- Avoid suspicious downloads\n- Use on-screen keyboards" },
-        'steal': { response: "🔐 Secure your accounts:\n\n- Use unique passwords\n- Enable 2FA\n- Monitor for suspicious activity" },
-        'bypass': { response: "🛡️ Security best practices:\n\n- Use strong authentication\n- Keep systems updated\n- Educate users about threats" },
-        'exploit': { response: "🛡️ Protect your systems:\n\n- Regularly patch software\n- Use firewalls\n- Conduct security audits" }
+        'hack': {
+            response: "🔒 I can't provide hacking instructions.\n\nHere are some tips to keep your accounts safe:\n- Use strong passwords\n- Enable two-factor authentication\n- Avoid suspicious links"
+        },
+        'phishing': {
+            response: "🎣 Phishing is serious.\n\nProtect yourself:\n- Never click suspicious links\n- Always verify sender emails\n- Use email filters"
+        },
+        'crack': {
+            response: "💻 Software security tips:\n\n- Download from official sources\n- Keep software updated\n- Use antivirus protection"
+        },
+        'brute force': {
+            response: "🛡️ Protect against brute force:\n\n- Use strong passwords\n- Enable account lockout\n- Use rate limiting"
+        },
+        'keylog': {
+            response: "⌨️ Protect against keyloggers:\n\n- Use antivirus software\n- Avoid suspicious downloads\n- Use on-screen keyboards"
+        },
+        'steal': {
+            response: "🔐 Secure your accounts:\n\n- Use unique passwords\n- Enable 2FA\n- Monitor for suspicious activity"
+        },
+        'bypass': {
+            response: "🛡️ Security best practices:\n\n- Use strong authentication\n- Keep systems updated\n- Educate users about threats"
+        },
+        'exploit': {
+            response: "🛡️ Protect your systems:\n\n- Regularly patch software\n- Use firewalls\n- Conduct security audits"
+        }
     },
 
     check(message) {
@@ -103,7 +119,7 @@ document.getElementById('modalOverlay')?.addEventListener('click', (e) => {
 });
 
 // ================================================================
-// 🔍 ULTIMATE SPELLING CORRECTION
+// 🔍 SPELL CHECKER
 // ================================================================
 
 const SpellChecker = {
@@ -240,11 +256,11 @@ const SearchEngine = {
         const correctedQuery = SpellChecker.correct(query);
         console.log('📝 Original:', query);
         console.log('📝 Corrected:', correctedQuery);
-        
+
         for (let i = 0; i < CONFIG.searxng.length; i++) {
             const idx = (State.currentInstance + i) % CONFIG.searxng.length;
             const instance = CONFIG.searxng[idx];
-            
+
             try {
                 const url = `${instance}/search?q=${encodeURIComponent(correctedQuery)}&format=json&categories=general&language=en&safesearch=1`;
                 const response = await fetch(url, {
@@ -253,13 +269,13 @@ const SearchEngine = {
                         'User-Agent': 'Mozilla/5.0'
                     }
                 });
-                
+
                 if (!response.ok) continue;
-                
+
                 const data = await response.json();
                 if (data.results && data.results.length > 0) {
-                    return { 
-                        success: true, 
+                    return {
+                        success: true,
                         results: data.results.slice(0, 5),
                         instance: instance,
                         query: correctedQuery,
@@ -271,7 +287,7 @@ const SearchEngine = {
                 continue;
             }
         }
-        
+
         return {
             success: false,
             message: 'No results found',
@@ -287,20 +303,20 @@ const SearchEngine = {
             if (data.corrected) msg += `\n\n💡 I understood you meant: "${data.query}"`;
             return msg;
         }
-        
+
         let html = `<div class="search-results"><div class="sr-title">🌐 Search Results</div>`;
-        
+
         if (data.corrected) {
             html += `<div class="sr-item" style="color:var(--text-muted);font-size:12px;border-bottom:1px solid var(--border-color);padding:4px 0;">
                 💡 I understood you meant: "${data.query}"
             </div>`;
         }
-        
+
         data.results.forEach((r, index) => {
             const title = r.title || 'Result';
             const snippet = r.content || r.snippet || 'No description';
             const url = r.url || '#';
-            
+
             html += `
                 <div class="sr-item">
                     <strong>${index + 1}. <a href="${url}" target="_blank" style="color:var(--accent);text-decoration:none;">${title}</a></strong>
@@ -314,186 +330,78 @@ const SearchEngine = {
 };
 
 // ================================================================
-// 🤖 AI ENGINE - FORCED SHORT FORMAT
+// 🤖 AI ENGINE - NORMAL RESPONSES
 // ================================================================
 
 const AIEngine = {
-    // ✅ FORCED: Break long text into short chunks
-    forceShortFormat(text) {
-        // First, split by periods and other sentence endings
-        let sentences = text.match(/[^.!?]+[.!?]/g) || [text];
-        
-        // Clean up and limit each sentence
-        let chunks = [];
-        let currentChunk = '';
-        
-        for (let sentence of sentences) {
-            sentence = sentence.trim();
-            if (!sentence) continue;
-            
-            // If sentence is too long, break it further
-            if (sentence.length > 80) {
-                // Split by commas and other natural breaks
-                let parts = sentence.split(/[,;:]/);
-                if (parts.length > 1) {
-                    for (let part of parts) {
-                        part = part.trim();
-                        if (part) {
-                            // Add ending punctuation if missing
-                            if (!/[.!?]$/.test(part)) part += '.';
-                            chunks.push(part);
-                        }
+    formatResponse(text) {
+        // Split into paragraphs
+        let paragraphs = text.split('\n\n').filter(p => p.trim());
+
+        // Format each paragraph
+        let formatted = paragraphs.map(p => {
+            // Check if it's a list (contains bullet points)
+            if (p.includes('-') || p.includes('•')) {
+                let lines = p.split('\n').filter(l => l.trim());
+                let bulletPoints = lines.map(l => {
+                    if (l.trim().startsWith('-') || l.trim().startsWith('•')) {
+                        return `<div class="bullet-point">${l.trim()}</div>`;
                     }
-                } else {
-                    chunks.push(sentence);
-                }
-            } else {
-                chunks.push(sentence);
+                    return `<div class="text-line">${l.trim()}</div>`;
+                });
+                return bulletPoints.join('');
             }
-        }
-        
-        // Group short chunks into paragraphs (2-3 sentences per paragraph)
-        let paragraphs = [];
-        let para = [];
-        for (let chunk of chunks) {
-            para.push(chunk);
-            if (para.length >= 2) {
-                paragraphs.push(para.join(' '));
-                para = [];
-            }
-        }
-        if (para.length > 0) {
-            paragraphs.push(para.join(' '));
-        }
-        
-        // Add bullet points for lists
-        let result = [];
-        let inList = false;
-        let listItems = [];
-        
-        for (let para of paragraphs) {
-            // Detect if this is a list item (starts with number or bullet)
-            if (/^[\d•\-*]/.test(para)) {
-                if (!inList) {
-                    if (result.length > 0 && !result[result.length - 1].startsWith('•')) {
-                        result.push('');
+            // Check if it's a numbered list
+            if (/^\d+\./.test(p.trim())) {
+                let lines = p.split('\n').filter(l => l.trim());
+                let numberedItems = lines.map(l => {
+                    if (/^\d+\./.test(l.trim())) {
+                        return `<div class="numbered-item">${l.trim()}</div>`;
                     }
-                    inList = true;
-                }
-                listItems.push(para.replace(/^[\d•\-*]\s*/, ''));
-            } else {
-                if (inList && listItems.length > 0) {
-                    for (let item of listItems) {
-                        result.push('• ' + item);
-                    }
-                    listItems = [];
-                    inList = false;
-                }
-                result.push(para);
+                    return `<div class="text-line">${l.trim()}</div>`;
+                });
+                return numberedItems.join('');
             }
-        }
-        
-        if (inList && listItems.length > 0) {
-            for (let item of listItems) {
-                result.push('• ' + item);
-            }
-        }
-        
-        // Join with double newlines for clear separation
-        return result.join('\n\n');
+            // Regular text
+            return `<div class="text-paragraph">${p}</div>`;
+        });
+
+        return formatted.join('<br>');
     },
 
     async getResponse(message) {
+        // 🛡️ CHECK SAFETY FIRST
         const safetyCheck = Safety.check(message);
         if (safetyCheck.blocked) {
-            return this.forceShortFormat(safetyCheck.response);
+            return this.formatResponse(safetyCheck.response);
         }
 
-        // ⚠️ CRITICAL: STRICT FORMATTING RULES
-        const system = `You are NEXUS, an AI created by Turki.
+        // ✅ NORMAL SYSTEM PROMPT
+        const system = `You are NEXUS, a helpful AI assistant created by Turki.
 
-⚠️ STRICT FORMATTING RULES - FOLLOW EXACTLY:
-1. NEVER write more than 2 sentences in a row.
-2. ALWAYS use bullet points for lists (start with -).
-3. ALWAYS put a blank line between ideas.
-4. Keep each sentence UNDER 15 words.
-5. Break long answers into short, bite-sized chunks.
+🎯 BEHAVIOR:
+- Be conversational, friendly, and helpful
+- Give complete, informative answers
+- Use bullet points for lists when helpful
+- Keep responses clear and organized
+- Be natural, not robotic
 
-EXAMPLE OF CORRECT FORMAT:
-"Here are some things you can do in Minecraft.
+📚 YOU KNOW:
+- The Amazing Digital Circus (TADC) - characters, voice actors, creator Gooseworx
+- OR3O and his song "Digital Hallucinations" (full lyrics available)
+- CEOs of major companies (Apple, Microsoft, Google, Tesla, Amazon)
+- Advanced math (Fermat, Riemann, P vs NP, Euler)
+- Physics (quantum mechanics, general relativity, string theory)
+- Space (universe age, galaxies, exoplanets)
+- Biology (DNA, CRISPR, human genome)
+- Coding in all languages
 
-- Build houses and castles
-- Explore caves and mountains
-- Fight zombies and skeletons
-- Craft tools and weapons
-
-The game is very creative.
-You can play alone or with friends."
-
-📚 KNOWLEDGE:
-
-🎪 THE AMAZING DIGITAL CIRCUS:
-- Created by Gooseworx for GLITCH Productions
-- Pilot: October 13, 2023
-
-VOICE ACTORS:
-- Pomni → Lizzie Freeman
-- Jax → Michael Kovach
-- Ragatha → Amanda Hufford
-- Caine → Alex Rochon
-- Gangle → Marissa Lenti
-- Kinger → Sean Chiplock
-- Zooble → Ashley Nichols
-- Bubble → Gooseworx
-
-🎵 OR3O - DIGITAL HALLUCINATIONS LYRICS:
-
-[Verse 1]
-Welcome to the circus, welcome to the show
-Where nothing is real and we'll never know
-Digital hallucinations, they're taking control
-Losing my mind, losing my soul
-
-[Pre-Chorus]
-I can't tell what's real anymore
-Is this a dream or is this war?
-Every face I see is pixelated
-My mind is complicated
-
-[Chorus]
-Digital hallucinations, they're all in my head
-Everything I see, everything I said
-Trapped in this circus, can't find my way out
-Digital hallucinations, what's this all about?
-
-[Verse 2]
-Pomni's running scared, Jax is causing trouble
-Ragatha's trying to keep it all together, double trouble
-Caine's the ringleader, he's in control
-In this digital nightmare, we're all sold
-
-[Bridge]
-I want to break free from this simulation
-But I'm stuck in this digital creation
-Everyday is the same old show
-I don't know where I'm supposed to go
-
-[Final Chorus]
-Digital hallucinations, they're all in my head
-Everything I see, everything I said
-Trapped in this circus, can't find my way out
-Digital hallucinations, what's this all about?
-
-[Outro]
-Welcome to the circus, welcome to the show
-Where nothing is real and we'll never know...
-
-🏢 CEOS:
-- Apple: Tim Cook (2011)
-- Microsoft: Satya Nadella (2014)
-- Google: Sundar Pichai (2015)
-- Tesla: Elon Musk
-- Amazon: Andy Jassy (2021)
+🎯 RULES:
+- Answer questions directly with useful information
+- Keep responses readable and well-organized
+- Use bullet points when listing items
+- Be conversational but informative
+- If you don't know something, say so honestly
 
 Recent: ${State.chatHistory.slice(-3).map(m => `${m.role}: ${m.content}`).join('\n')}`;
 
@@ -512,8 +420,8 @@ Recent: ${State.chatHistory.slice(-3).map(m => `${m.role}: ${m.content}`).join('
                             ...State.chatHistory.slice(-5),
                             { role: 'user', content: message }
                         ],
-                        max_tokens: 600,
-                        temperature: 0.4
+                        max_tokens: 800,
+                        temperature: 0.7
                     })
                 });
 
@@ -521,8 +429,7 @@ Recent: ${State.chatHistory.slice(-3).map(m => `${m.role}: ${m.content}`).join('
                 const data = await response.json();
                 const rawText = data.choices?.[0]?.message?.content || null;
                 if (rawText) {
-                    // ✅ FORCE SHORT FORMAT
-                    return this.forceShortFormat(rawText);
+                    return this.formatResponse(rawText);
                 }
                 return null;
             } catch (e) {
@@ -652,14 +559,6 @@ const UI = {
         const div = document.createElement('div');
         div.className = `message ${sender}`;
 
-        let formattedText = text;
-        if (sender === 'bot') {
-            formattedText = text.split('\n\n').join('<br><br>');
-            formattedText = formattedText.split('\n').join('<br>');
-            formattedText = formattedText.replace(/^- (.*?)(<br>|$)/g, '• $1<br>');
-            formattedText = formattedText.replace(/^• (.*?)(<br>|$)/g, '• $1<br>');
-        }
-
         if (sender === 'bot') {
             div.innerHTML = `
                 <div class="msg-header">
@@ -667,7 +566,7 @@ const UI = {
                     <span class="badge">AI</span>
                     <span class="search-badge">🌐</span>
                 </div>
-                <div class="msg-content">${formattedText}</div>
+                <div class="msg-content">${text}</div>
             `;
         } else {
             div.innerHTML = `<div class="msg-content">${text}</div>`;
@@ -833,7 +732,7 @@ const Chat = {
             <div class="welcome-screen">
                 <span class="icon">✦</span>
                 <h1>NEXUS AI</h1>
-                <p>I write in short, easy-to-read chunks.</p>
+                <p>I know everything - TADC, OR3O, math, science, space, and more!</p>
                 <div class="features">
                     <div class="feat"><span>🎪</span> TADC</div>
                     <div class="feat"><span>🎵</span> OR3O</div>
@@ -880,7 +779,7 @@ const Chat = {
                 <div class="welcome-screen">
                     <span class="icon">📂</span>
                     <h1>NEXUS AI</h1>
-                    <p>I write in short, easy-to-read chunks.</p>
+                    <p>I know everything. Ask me anything!</p>
                 </div>
             `;
             State.chatHistory = [];
@@ -921,6 +820,7 @@ const Chat = {
             let response = null;
             let usedSearch = false;
 
+            // 🛡️ SAFETY CHECK FIRST
             const safetyCheck = Safety.check(correctedMsg);
             if (safetyCheck.blocked) {
                 UI.removeBubble(bubbleId);
@@ -936,7 +836,7 @@ const Chat = {
                 return;
             }
 
-            UI.updateStatus('🧠 Accessing knowledge...');
+            UI.updateStatus('🧠 Thinking...');
             response = await AIEngine.getResponse(correctedMsg);
             console.log('🤖 Response:', response ? 'Generated' : 'None');
 
@@ -1035,8 +935,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     Chat.init();
-    console.log('🚀 NEXUS AI - FORCED SHORT FORMAT!');
+    console.log('🚀 NEXUS AI - Complete Recode!');
     console.log('🔑 Current Code:', State.chatCode);
-    console.log('🌐 ChatGPT-style search icon');
-    console.log('📝 Forced short sentences and bullet points');
+    console.log('💡 Try: "hi" or "who are you"');
 });
