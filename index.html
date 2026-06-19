@@ -8,7 +8,44 @@
     <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+<!-- ===== INVITE CHECK ===== -->
+<script>
+    (function checkInviteAccess() {
+        // Check if user already has access
+        if (sessionStorage.getItem('nexus_trusted') === 'true') {
+            return; // Already logged in
+        }
 
+        const urlParams = new URLSearchParams(window.location.search);
+        const inviteCode = urlParams.get('invite');
+
+        if (!inviteCode) {
+            // No invite code - redirect to invitation page
+            window.location.href = 'invite.html';
+            return;
+        }
+
+        // Check invite validity
+        const invites = JSON.parse(localStorage.getItem('nexus_invites') || '[]');
+        const validInvite = invites.find(i => i.code === inviteCode && !i.used);
+
+        if (!validInvite) {
+            // Invalid or used invite
+            window.location.href = 'invite.html?invalid=true';
+            return;
+        }
+
+        // Mark invite as used
+        validInvite.used = true;
+        validInvite.usedBy = 'User';
+        localStorage.setItem('nexus_invites', JSON.stringify(invites));
+        sessionStorage.setItem('nexus_trusted', 'true');
+        sessionStorage.setItem('nexus_invite_code', inviteCode);
+
+        // Remove ?invite= from URL
+        window.history.replaceState({}, document.title, window.location.pathname);
+    })();
+</script>
     <!-- ===== CUSTOM MODAL (No "This page says"!) ===== -->
     <div class="modal-overlay" id="modalOverlay">
         <div class="modal-box">
