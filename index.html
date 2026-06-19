@@ -4,14 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>NEXUS AI</title>
+    <meta name="google-site-verification" content="VshGjRNSHbVZ5S6JYNICoc9IBbyOm4XwkGfMunboWZY" />
     
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="styles.css" />
     
     <style>
         /* ================================================================
-           🎨 EXTRA STYLES FOR INVITE BUTTON
+           🎨 EXTRA STYLES
            ================================================================ */
         
         .invite-btn {
@@ -54,7 +54,6 @@
             display: none;
             align-items: center;
             justify-content: center;
-            animation: modalFadeIn 0.3s ease;
         }
 
         .invite-modal-overlay.show {
@@ -77,11 +76,6 @@
         @keyframes modalPop {
             0% { transform: scale(0.9); opacity: 0; }
             100% { transform: scale(1); opacity: 1; }
-        }
-
-        @keyframes modalFadeIn {
-            0% { opacity: 0; }
-            100% { opacity: 1; }
         }
 
         .invite-modal .close-modal {
@@ -114,45 +108,40 @@
             margin-bottom: 20px;
         }
 
-        .invite-modal .input-group {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 16px;
+        .invite-modal .code-display {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            margin: 16px 0;
+            border: 1px solid rgba(255, 255, 255, 0.04);
         }
 
-        .invite-modal .input-group input {
-            flex: 1;
-            padding: 12px 16px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            color: white;
-            font-size: 14px;
-            outline: none;
-            transition: 0.3s;
-            font-family: var(--font);
+        .invite-modal .code-display .code {
+            font-size: 32px;
+            font-weight: 700;
+            font-family: 'Courier New', monospace;
+            color: #a78bfa;
+            letter-spacing: 4px;
         }
 
-        .invite-modal .input-group input:focus {
-            border-color: rgba(108, 60, 255, 0.3);
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .invite-modal .input-group input::placeholder {
+        .invite-modal .code-display .label {
+            font-size: 12px;
             color: var(--text-muted);
+            margin-bottom: 4px;
         }
 
         .invite-modal .btn-generate {
-            padding: 12px 20px;
+            width: 100%;
+            padding: 14px;
             background: linear-gradient(135deg, #6c3cff, #4f46e5);
             border: none;
-            border-radius: 10px;
+            border-radius: 12px;
             color: white;
-            font-size: 14px;
+            font-size: 16px;
             font-weight: 600;
             cursor: pointer;
             transition: 0.3s;
-            white-space: nowrap;
             font-family: var(--font);
         }
 
@@ -161,174 +150,34 @@
             box-shadow: 0 8px 30px rgba(108, 60, 255, 0.3);
         }
 
-        .invite-modal .btn-generate:disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .invite-modal .link-box {
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 10px;
-            padding: 10px 14px;
-            margin: 12px 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.03);
-            display: none;
-        }
-
-        .invite-modal .link-box.show {
-            display: flex;
-        }
-
-        .invite-modal .link-box input {
-            background: transparent;
-            border: none;
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 13px;
-            outline: none;
-            flex: 1;
-            font-family: monospace;
-        }
-
-        .invite-modal .link-box .copy-btn {
-            padding: 4px 14px;
+        .invite-modal .btn-copy {
+            padding: 10px 20px;
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 6px;
-            color: rgba(255, 255, 255, 0.4);
-            cursor: pointer;
-            font-size: 12px;
-            transition: 0.3s;
-            font-family: var(--font);
-        }
-
-        .invite-modal .link-box .copy-btn:hover {
-            background: rgba(255, 255, 255, 0.1);
-            color: rgba(255, 255, 255, 0.7);
-        }
-
-        .invite-modal .invite-list {
-            margin-top: 16px;
-            max-height: 200px;
-            overflow-y: auto;
-        }
-
-        .invite-modal .invite-list::-webkit-scrollbar {
-            width: 3px;
-        }
-        .invite-modal .invite-list::-webkit-scrollbar-thumb {
-            background: rgba(108, 60, 255, 0.2);
-            border-radius: 10px;
-        }
-
-        .invite-modal .invite-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 8px 12px;
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.04);
             border-radius: 8px;
-            margin-bottom: 6px;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-
-        .invite-modal .invite-item .code {
-            font-family: monospace;
-            font-size: 12px;
-            color: #a78bfa;
-            font-weight: 600;
-        }
-
-        .invite-modal .invite-item .status {
-            font-size: 11px;
-            color: rgba(255, 255, 255, 0.2);
-        }
-
-        .invite-modal .invite-item .status.used {
-            color: #34d399;
-        }
-        .invite-modal .invite-item .status.available {
-            color: #fbbf24;
-        }
-
-        .invite-modal .invite-item .actions {
-            display: flex;
-            gap: 4px;
-        }
-
-        .invite-modal .invite-item .actions button {
-            padding: 2px 8px;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            border-radius: 4px;
-            color: rgba(255, 255, 255, 0.3);
+            color: rgba(255, 255, 255, 0.5);
             cursor: pointer;
-            font-size: 11px;
             transition: 0.3s;
             font-family: var(--font);
-        }
-
-        .invite-modal .invite-item .actions button:hover {
-            background: rgba(255, 255, 255, 0.08);
-            color: rgba(255, 255, 255, 0.6);
-        }
-
-        .invite-modal .invite-item .actions .delete-btn:hover {
-            background: rgba(239, 68, 68, 0.1);
-            color: #ef4444;
-        }
-
-        .invite-modal .empty-invites {
-            text-align: center;
-            color: var(--text-muted);
-            padding: 20px 0;
             font-size: 14px;
+            margin-top: 8px;
         }
 
-        .invite-modal .stats {
-            display: flex;
-            gap: 20px;
-            margin: 12px 0;
+        .invite-modal .btn-copy:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .invite-modal .info-text {
             font-size: 13px;
             color: var(--text-muted);
+            text-align: center;
+            margin-top: 12px;
+            line-height: 1.6;
         }
 
-        .invite-modal .stats span {
-            color: var(--text-secondary);
-            font-weight: 600;
-        }
-
-        .invite-modal .modal-footer {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 16px;
-            padding-top: 16px;
-            border-top: 1px solid rgba(255, 255, 255, 0.03);
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .invite-modal .modal-footer button {
-            padding: 6px 14px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            border-radius: 6px;
-            color: rgba(255, 255, 255, 0.3);
-            font-size: 12px;
-            cursor: pointer;
-            transition: 0.3s;
-            font-family: var(--font);
-        }
-
-        .invite-modal .modal-footer button:hover {
-            background: rgba(255, 255, 255, 0.06);
-            color: rgba(255, 255, 255, 0.6);
+        .invite-modal .info-text span {
+            color: #34d399;
         }
 
         .toast-invite {
@@ -357,16 +206,9 @@
             .invite-modal {
                 padding: 24px 18px;
             }
-            .invite-modal .input-group {
-                flex-direction: column;
-            }
-            .invite-modal .invite-item {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            .invite-modal .stats {
-                flex-wrap: wrap;
-                gap: 10px;
+            .invite-modal .code-display .code {
+                font-size: 24px;
+                letter-spacing: 2px;
             }
         }
     </style>
@@ -394,30 +236,20 @@
     <div class="invite-modal-overlay" id="inviteModal">
         <div class="invite-modal">
             <button class="close-modal" onclick="closeInviteModal()">✕</button>
-            <h2>🔗 Invite Friends</h2>
-            <p class="subtitle">Generate unique links for friends to join NEXUS AI</p>
+            <h2>🔗 Invite Code</h2>
+            <p class="subtitle">Generate a custom code to share with friends</p>
 
-            <div class="stats">
-                Total: <span id="totalInvites">0</span> • Used: <span id="usedInvites">0</span> • Available: <span id="availableInvites">0</span>
+            <div class="code-display">
+                <div class="label">Your Invite Code</div>
+                <div class="code" id="inviteCodeDisplay">------</div>
             </div>
 
-            <div class="input-group">
-                <input type="text" id="friendNameInput" placeholder="Friend's name (optional)" />
-                <button class="btn-generate" onclick="generateInvite()">✨ Generate</button>
-            </div>
+            <button class="btn-generate" onclick="generateInviteCode()">🔄 Generate New Code</button>
+            <button class="btn-copy" onclick="copyInviteCode()">📋 Copy Code</button>
 
-            <div class="link-box" id="linkBox">
-                <input type="text" id="inviteLinkInput" readonly />
-                <button class="copy-btn" onclick="copyInviteLink()">📋 Copy</button>
-            </div>
-
-            <div class="invite-list" id="inviteList">
-                <div class="empty-invites">No invites created yet.</div>
-            </div>
-
-            <div class="modal-footer">
-                <button onclick="exportInvites()">📤 Export All</button>
-                <button onclick="clearAllInvites()" style="color:#ef4444;">🗑️ Clear All</button>
+            <div class="info-text">
+                Share this code with friends. They can use it to access NEXUS AI.<br>
+                <span>♾️ Unlimited uses • No expiration</span>
             </div>
         </div>
     </div>
@@ -498,201 +330,62 @@
 
     <script>
         // ================================================================
-        // 🔗 INVITE SYSTEM - COMPLETE
+        // 🔗 INVITE CODE SYSTEM - SIMPLE & INFINITE
         // ================================================================
 
-        const SITE_URL = window.location.origin + window.location.pathname.replace(/\/[^/]*$/, '/');
+        // Load or create invite code
+        let inviteCode = localStorage.getItem('nexus_invite_code');
 
-        let invites = JSON.parse(localStorage.getItem('nexus_invites') || '[]');
+        function generateInviteCode() {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let code = '';
+            for (let i = 0; i < 8; i++) {
+                code += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            inviteCode = code;
+            localStorage.setItem('nexus_invite_code', inviteCode);
+            document.getElementById('inviteCodeDisplay').textContent = inviteCode;
+            showToastInvite('✅ New invite code generated!');
+        }
 
-        // ================================================================
-        // 📤 OPEN / CLOSE INVITE MODAL
-        // ================================================================
+        function copyInviteCode() {
+            const code = document.getElementById('inviteCodeDisplay').textContent;
+            if (code === '------') {
+                showToastInvite('⚠️ Generate a code first!');
+                return;
+            }
+            navigator.clipboard.writeText(code).then(() => {
+                showToastInvite('📋 Code copied!');
+            }).catch(() => {
+                // Fallback
+                const input = document.createElement('input');
+                input.value = code;
+                document.body.appendChild(input);
+                input.select();
+                document.execCommand('copy');
+                document.body.removeChild(input);
+                showToastInvite('📋 Code copied!');
+            });
+        }
 
         function openInviteModal() {
+            const display = document.getElementById('inviteCodeDisplay');
+            if (inviteCode) {
+                display.textContent = inviteCode;
+            } else {
+                display.textContent = '------';
+            }
             document.getElementById('inviteModal').classList.add('show');
-            renderInviteList();
-            updateInviteStats();
         }
 
         function closeInviteModal() {
             document.getElementById('inviteModal').classList.remove('show');
-            document.getElementById('linkBox').classList.remove('show');
         }
 
         // Close on overlay click
         document.getElementById('inviteModal').addEventListener('click', (e) => {
             if (e.target === e.currentTarget) closeInviteModal();
         });
-
-        // ================================================================
-        // 🔑 GENERATE INVITE
-        // ================================================================
-
-        function generateInvite() {
-            const name = document.getElementById('friendNameInput').value.trim() || 'Friend';
-            const code = generateCode();
-
-            const invite = {
-                code: code,
-                name: name,
-                created: new Date().toISOString(),
-                used: false,
-                usedBy: null
-            };
-
-            invites.push(invite);
-            saveInvites();
-            renderInviteList();
-            updateInviteStats();
-
-            // Show link
-            const link = `${SITE_URL}?invite=${code}`;
-            document.getElementById('inviteLinkInput').value = link;
-            document.getElementById('linkBox').classList.add('show');
-
-            document.getElementById('friendNameInput').value = '';
-            showToastInvite(`✅ Invite created for ${name}!`);
-        }
-
-        function generateCode() {
-            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-            let code = '';
-            for (let i = 0; i < 8; i++) {
-                code += chars.charAt(Math.floor(Math.random() * chars.length));
-            }
-            return code;
-        }
-
-        // ================================================================
-        // 📋 RENDER INVITE LIST
-        // ================================================================
-
-        function renderInviteList() {
-            const list = document.getElementById('inviteList');
-
-            if (invites.length === 0) {
-                list.innerHTML = `<div class="empty-invites">No invites created yet.</div>`;
-                return;
-            }
-
-            list.innerHTML = invites.map((inv, index) => `
-                <div class="invite-item">
-                    <div>
-                        <div class="code">${inv.code}</div>
-                        <div style="font-size:11px;color:var(--text-muted);">${inv.name} • ${new Date(inv.created).toLocaleDateString()}</div>
-                    </div>
-                    <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
-                        <span class="status ${inv.used ? 'used' : 'available'}">${inv.used ? '✅ Used' : '🟡 Available'}</span>
-                        ${inv.usedBy ? `<span style="font-size:11px;color:var(--text-muted);">by ${inv.usedBy}</span>` : ''}
-                        <div class="actions">
-                            <button onclick="copyInvite('${inv.code}')">📋</button>
-                            <button class="delete-btn" onclick="deleteInvite(${index})">✕</button>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        // ================================================================
-        // 📊 UPDATE STATS
-        // ================================================================
-
-        function updateInviteStats() {
-            const total = invites.length;
-            const used = invites.filter(i => i.used).length;
-            const available = total - used;
-            document.getElementById('totalInvites').textContent = total;
-            document.getElementById('usedInvites').textContent = used;
-            document.getElementById('availableInvites').textContent = available;
-        }
-
-        // ================================================================
-        // 📋 COPY / DELETE / EXPORT / CLEAR
-        // ================================================================
-
-        function copyInvite(code) {
-            const link = `${SITE_URL}?invite=${code}`;
-            navigator.clipboard.writeText(link).then(() => {
-                showToastInvite('📋 Link copied!');
-            }).catch(() => {
-                // Fallback
-                const input = document.createElement('input');
-                input.value = link;
-                document.body.appendChild(input);
-                input.select();
-                document.execCommand('copy');
-                document.body.removeChild(input);
-                showToastInvite('📋 Link copied!');
-            });
-        }
-
-        function copyInviteLink() {
-            const input = document.getElementById('inviteLinkInput');
-            input.select();
-            navigator.clipboard.writeText(input.value).then(() => {
-                showToastInvite('📋 Link copied!');
-            }).catch(() => {
-                document.execCommand('copy');
-                showToastInvite('📋 Link copied!');
-            });
-        }
-
-        function deleteInvite(index) {
-            if (confirm('Delete this invite?')) {
-                invites.splice(index, 1);
-                saveInvites();
-                renderInviteList();
-                updateInviteStats();
-                showToastInvite('🗑️ Invite deleted');
-            }
-        }
-
-        function clearAllInvites() {
-            if (invites.length === 0) return;
-            if (confirm('Delete ALL invites?')) {
-                invites = [];
-                saveInvites();
-                renderInviteList();
-                updateInviteStats();
-                document.getElementById('linkBox').classList.remove('show');
-                showToastInvite('🗑️ All invites cleared');
-            }
-        }
-
-        function exportInvites() {
-            if (invites.length === 0) {
-                showToastInvite('No invites to export');
-                return;
-            }
-
-            let text = '=== NEXUS AI INVITES ===\n\n';
-            invites.forEach(inv => {
-                text += `Code: ${inv.code}\n`;
-                text += `Name: ${inv.name}\n`;
-                text += `Used: ${inv.used ? 'Yes' : 'No'}\n`;
-                if (inv.usedBy) text += `Used by: ${inv.usedBy}\n`;
-                text += `Link: ${SITE_URL}?invite=${inv.code}\n`;
-                text += '---\n\n';
-            });
-
-            const blob = new Blob([text], { type: 'text/plain' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `nexus-invites-${new Date().toISOString().slice(0,10)}.txt`;
-            a.click();
-            URL.revokeObjectURL(url);
-            showToastInvite('📤 Invites exported!');
-        }
-
-        // ================================================================
-        // 💾 SAVE / LOAD
-        // ================================================================
-
-        function saveInvites() {
-            localStorage.setItem('nexus_invites', JSON.stringify(invites));
-        }
 
         // ================================================================
         // 🔔 TOAST
@@ -707,54 +400,51 @@
         }
 
         // ================================================================
-        // 🔗 CHECK INVITE IN URL
+        // 🔗 CHECK INVITE IN URL (OPTIONAL - for access control)
         // ================================================================
 
-        function checkInvite() {
+        function checkInviteAccess() {
             const urlParams = new URLSearchParams(window.location.search);
-            const code = urlParams.get('invite');
+            const code = urlParams.get('code');
 
             if (code) {
-                // Check if user already has access
-                if (sessionStorage.getItem('nexus_trusted') === 'true') {
-                    // Remove invite from URL
-                    window.history.replaceState({}, document.title, window.location.pathname);
-                    return;
-                }
-
-                const invite = invites.find(i => i.code === code);
-                if (invite && !invite.used) {
-                    invite.used = true;
-                    invite.usedBy = 'User';
-                    saveInvites();
+                // Check if code matches stored invite
+                if (inviteCode && code === inviteCode) {
                     sessionStorage.setItem('nexus_trusted', 'true');
-                    sessionStorage.setItem('nexus_invite_code', code);
-                    renderInviteList();
-                    updateInviteStats();
-                    showToastInvite(`✅ Welcome! Invite from ${invite.name} activated`);
-                    
-                    // Remove invite from URL
+                    showToastInvite('✅ Access granted! Welcome to NEXUS AI.');
+                    // Remove code from URL
                     window.history.replaceState({}, document.title, window.location.pathname);
-                } else if (invite && invite.used) {
-                    showToastInvite('❌ This invite has already been used.');
-                } else {
+                } else if (code) {
                     showToastInvite('❌ Invalid invite code.');
                 }
             }
 
-            // Auto-trust if already trusted
-            if (sessionStorage.getItem('nexus_trusted') === 'true') {
-                // Already trusted, nothing to do
-            }
+            // If no invite check, just let them in (open access)
+            // Remove this check if you want it completely open
         }
+
+        // ================================================================
+        // 💾 CHAT SAVES TO DEVICE (already in script.js)
+        // ================================================================
+
+        // Chat saving is handled by the existing Storage system in script.js
+        // All chats are saved to localStorage automatically
 
         // ================================================================
         // 🏃 INIT
         // ================================================================
 
-        checkInvite();
-        console.log('🚀 NEXUS AI - Invite System Loaded');
-        console.log(`🔗 ${invites.length} invites in storage`);
+        // Generate initial code if none exists
+        if (!inviteCode) {
+            generateInviteCode();
+        }
+
+        checkInviteAccess();
+
+        console.log('🚀 NEXUS AI - Invite System');
+        console.log(`🔑 Current Invite Code: ${inviteCode}`);
+        console.log('💡 Share this code with friends!');
+        console.log('📱 Chats are saved to your device automatically.');
     </script>
 
 </body>
