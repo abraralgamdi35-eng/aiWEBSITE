@@ -10,7 +10,10 @@
     <link rel="stylesheet" href="styles.css" />
     
     <style>
-        /* ===== INVITE BUTTON ===== */
+        /* ================================================================
+           🎨 STYLES
+           ================================================================ */
+        
         .invite-btn {
             display: inline-flex;
             align-items: center;
@@ -62,7 +65,7 @@
             border: 1px solid var(--border-color);
             border-radius: 20px;
             padding: 40px 45px;
-            max-width: 480px;
+            max-width: 520px;
             width: 90%;
             max-height: 90vh;
             overflow-y: auto;
@@ -105,41 +108,59 @@
             margin-bottom: 20px;
         }
 
-        .invite-modal .code-display {
+        .invite-modal .link-box {
             background: rgba(0, 0, 0, 0.3);
             border-radius: 12px;
-            padding: 20px;
-            text-align: center;
+            padding: 16px 20px;
             margin: 16px 0;
             border: 1px solid rgba(255, 255, 255, 0.04);
         }
 
-        .invite-modal .code-display .code {
-            font-size: 32px;
-            font-weight: 700;
-            font-family: 'Courier New', monospace;
-            color: #a78bfa;
-            letter-spacing: 4px;
-        }
-
-        .invite-modal .code-display .label {
-            font-size: 12px;
+        .invite-modal .link-box .label {
+            font-size: 11px;
             color: var(--text-muted);
-            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
         }
 
-        .invite-modal .btn-generate {
-            width: 100%;
-            padding: 14px;
-            background: linear-gradient(135deg, #6c3cff, #4f46e5);
+        .invite-modal .link-box .link {
+            font-size: 15px;
+            font-weight: 500;
+            color: #a78bfa;
+            word-break: break-all;
+            font-family: 'Courier New', monospace;
+            user-select: all;
+        }
+
+        .invite-modal .link-box .link-code {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.3);
+            font-family: monospace;
+        }
+
+        .invite-modal .btn-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .invite-modal .btn-group button {
+            flex: 1;
+            padding: 12px 20px;
             border: none;
-            border-radius: 12px;
-            color: white;
-            font-size: 16px;
+            border-radius: 10px;
+            font-size: 14px;
             font-weight: 600;
             cursor: pointer;
             transition: 0.3s;
             font-family: var(--font);
+            min-width: 100px;
+        }
+
+        .invite-modal .btn-generate {
+            background: linear-gradient(135deg, #6c3cff, #4f46e5);
+            color: white;
         }
 
         .invite-modal .btn-generate:hover {
@@ -148,17 +169,9 @@
         }
 
         .invite-modal .btn-copy {
-            width: 100%;
-            padding: 12px;
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 8px;
-            color: rgba(255, 255, 255, 0.5);
-            cursor: pointer;
-            transition: 0.3s;
-            font-family: var(--font);
-            font-size: 14px;
-            margin-top: 8px;
+            color: rgba(255, 255, 255, 0.6);
         }
 
         .invite-modal .btn-copy:hover {
@@ -166,11 +179,22 @@
             color: rgba(255, 255, 255, 0.8);
         }
 
+        .invite-modal .btn-share {
+            background: rgba(52, 211, 153, 0.1);
+            border: 1px solid rgba(52, 211, 153, 0.15);
+            color: #34d399;
+        }
+
+        .invite-modal .btn-share:hover {
+            background: rgba(52, 211, 153, 0.15);
+            transform: translateY(-2px);
+        }
+
         .invite-modal .info-text {
             font-size: 13px;
             color: var(--text-muted);
             text-align: center;
-            margin-top: 12px;
+            margin-top: 16px;
             line-height: 1.6;
         }
 
@@ -204,9 +228,11 @@
             .invite-modal {
                 padding: 24px 18px;
             }
-            .invite-modal .code-display .code {
-                font-size: 24px;
-                letter-spacing: 2px;
+            .invite-modal .btn-group button {
+                flex: 1 1 100%;
+            }
+            .invite-modal .link-box .link {
+                font-size: 13px;
             }
         }
     </style>
@@ -234,20 +260,23 @@
     <div class="invite-modal-overlay" id="inviteModal">
         <div class="invite-modal">
             <button class="close-modal" onclick="closeInviteModal()">✕</button>
-            <h2>🔗 Invite Code</h2>
-            <p class="subtitle">Generate a custom code to share with friends</p>
+            <h2>🔗 Invite Link</h2>
+            <p class="subtitle">Share this link with friends to access NEXUS AI</p>
 
-            <div class="code-display">
-                <div class="label">Your Invite Code</div>
-                <div class="code" id="inviteCodeDisplay">------</div>
+            <div class="link-box">
+                <div class="label">📋 Your Invite Link</div>
+                <div class="link" id="inviteLinkDisplay">https://abraralgamdi35-eng.github.io/aiWEBSITE/?invite=------</div>
             </div>
 
-            <button class="btn-generate" onclick="generateInviteCode()">🔄 Generate New Code</button>
-            <button class="btn-copy" onclick="copyInviteCode()">📋 Copy Code</button>
+            <div class="btn-group">
+                <button class="btn-generate" onclick="generateInvite()">🔄 New Link</button>
+                <button class="btn-copy" onclick="copyInviteLink()">📋 Copy</button>
+                <button class="btn-share" onclick="shareInviteLink()">📤 Share</button>
+            </div>
 
             <div class="info-text">
-                Share this code with friends. They can use it to access NEXUS AI.<br>
-                <span>♾️ Unlimited uses • No expiration</span>
+                <span>♾️ Unlimited uses • No expiration</span><br>
+                Anyone with this link can access NEXUS AI
             </div>
         </div>
     </div>
@@ -283,7 +312,6 @@
                     <div class="title">NEXUS <span>AI</span></div>
                 </div>
                 <div class="right">
-                    <!-- 🔗 INVITE BUTTON -->
                     <button class="invite-btn" onclick="openInviteModal()">
                         <span class="icon">🔗</span> Invite
                     </button>
@@ -328,13 +356,15 @@
 
     <script>
         // ================================================================
-        // 🔗 INVITE CODE SYSTEM
+        // 🔗 FULL INVITE LINK SYSTEM
         // ================================================================
+
+        const SITE_URL = 'https://abraralgamdi35-eng.github.io/aiWEBSITE';
 
         // Load or create invite code
         let inviteCode = localStorage.getItem('nexus_invite_code');
 
-        function generateInviteCode() {
+        function generateInvite() {
             const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
             let code = '';
             for (let i = 0; i < 8; i++) {
@@ -342,37 +372,60 @@
             }
             inviteCode = code;
             localStorage.setItem('nexus_invite_code', inviteCode);
-            document.getElementById('inviteCodeDisplay').textContent = inviteCode;
-            showToastInvite('✅ New invite code generated!');
+            updateInviteDisplay();
+            showToastInvite('✅ New invite link generated!');
         }
 
-        function copyInviteCode() {
-            const code = document.getElementById('inviteCodeDisplay').textContent;
-            if (code === '------') {
-                showToastInvite('⚠️ Generate a code first!');
+        function updateInviteDisplay() {
+            const display = document.getElementById('inviteLinkDisplay');
+            if (inviteCode) {
+                display.textContent = `${SITE_URL}/?invite=${inviteCode}`;
+            } else {
+                display.textContent = `${SITE_URL}/?invite=------`;
+            }
+        }
+
+        function copyInviteLink() {
+            const link = document.getElementById('inviteLinkDisplay').textContent;
+            if (link.includes('------')) {
+                showToastInvite('⚠️ Generate a link first!');
                 return;
             }
-            navigator.clipboard.writeText(code).then(() => {
-                showToastInvite('📋 Code copied!');
+            navigator.clipboard.writeText(link).then(() => {
+                showToastInvite('📋 Link copied!');
             }).catch(() => {
                 // Fallback
                 const input = document.createElement('input');
-                input.value = code;
+                input.value = link;
                 document.body.appendChild(input);
                 input.select();
                 document.execCommand('copy');
                 document.body.removeChild(input);
-                showToastInvite('📋 Code copied!');
+                showToastInvite('📋 Link copied!');
             });
         }
 
-        function openInviteModal() {
-            const display = document.getElementById('inviteCodeDisplay');
-            if (inviteCode) {
-                display.textContent = inviteCode;
-            } else {
-                display.textContent = '------';
+        function shareInviteLink() {
+            const link = document.getElementById('inviteLinkDisplay').textContent;
+            if (link.includes('------')) {
+                showToastInvite('⚠️ Generate a link first!');
+                return;
             }
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: 'NEXUS AI Invite',
+                    text: 'Join me on NEXUS AI - a free AI assistant!',
+                    url: link
+                }).catch(() => {});
+            } else {
+                copyInviteLink();
+                showToastInvite('📋 Link copied - share it with friends!');
+            }
+        }
+
+        function openInviteModal() {
+            updateInviteDisplay();
             document.getElementById('inviteModal').classList.add('show');
         }
 
@@ -398,20 +451,34 @@
         }
 
         // ================================================================
-        // 🔗 CHECK INVITE IN URL (OPTIONAL - for access control)
+        // 🔗 CHECK INVITE IN URL
         // ================================================================
 
         function checkInviteAccess() {
             const urlParams = new URLSearchParams(window.location.search);
-            const code = urlParams.get('code');
+            const code = urlParams.get('invite');
 
             if (code) {
+                // Check if code matches stored invite OR if it's a valid code
                 if (inviteCode && code === inviteCode) {
                     sessionStorage.setItem('nexus_trusted', 'true');
-                    showToastInvite('✅ Access granted! Welcome to NEXUS AI.');
+                    sessionStorage.setItem('nexus_invite_code', code);
+                    showToastInvite('✅ Welcome! You have access to NEXUS AI.');
+                    // Remove code from URL
                     window.history.replaceState({}, document.title, window.location.pathname);
                 } else if (code) {
-                    showToastInvite('❌ Invalid invite code.');
+                    // Check if code is valid format
+                    if (/^[A-Z0-9]{8}$/.test(code)) {
+                        // Valid format - store it
+                        localStorage.setItem('nexus_invite_code', code);
+                        inviteCode = code;
+                        sessionStorage.setItem('nexus_trusted', 'true');
+                        sessionStorage.setItem('nexus_invite_code', code);
+                        showToastInvite('✅ Access granted! Welcome to NEXUS AI.');
+                        window.history.replaceState({}, document.title, window.location.pathname);
+                    } else {
+                        showToastInvite('❌ Invalid invite code.');
+                    }
                 }
             }
         }
@@ -422,14 +489,14 @@
 
         // Generate initial code if none exists
         if (!inviteCode) {
-            generateInviteCode();
+            generateInvite();
         }
 
         checkInviteAccess();
 
         console.log('🚀 NEXUS AI - Invite System');
-        console.log(`🔑 Current Invite Code: ${inviteCode}`);
-        console.log('💡 Share this code with friends!');
+        console.log(`🔗 Invite Link: ${SITE_URL}/?invite=${inviteCode}`);
+        console.log('💡 Share this link with friends!');
         console.log('📱 Chats are saved to your device automatically.');
     </script>
 
