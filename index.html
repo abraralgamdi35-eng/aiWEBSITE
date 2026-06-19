@@ -10,10 +10,6 @@
     <link rel="stylesheet" href="styles.css" />
     
     <style>
-        /* ================================================================
-           🎨 STYLES
-           ================================================================ */
-        
         .invite-btn {
             display: inline-flex;
             align-items: center;
@@ -41,7 +37,6 @@
             font-size: 16px;
         }
 
-        /* ===== INVITE MODAL ===== */
         .invite-modal-overlay {
             position: fixed;
             top: 0;
@@ -131,12 +126,6 @@
             word-break: break-all;
             font-family: 'Courier New', monospace;
             user-select: all;
-        }
-
-        .invite-modal .link-box .link-code {
-            font-size: 13px;
-            color: rgba(255, 255, 255, 0.3);
-            font-family: monospace;
         }
 
         .invite-modal .btn-group {
@@ -284,7 +273,6 @@
     <!-- ===== APP ===== -->
     <div class="app-container">
 
-        <!-- ===== SIDEBAR ===== -->
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
                 <a href="index.html" class="logo">
@@ -303,7 +291,6 @@
             </div>
         </aside>
 
-        <!-- ===== MAIN CHAT ===== -->
         <main class="main-chat">
 
             <header class="chat-header">
@@ -361,7 +348,6 @@
 
         const SITE_URL = 'https://abraralgamdi35-eng.github.io/aiWEBSITE';
 
-        // Load or create invite code
         let inviteCode = localStorage.getItem('nexus_invite_code');
 
         function generateInvite() {
@@ -394,7 +380,6 @@
             navigator.clipboard.writeText(link).then(() => {
                 showToastInvite('📋 Link copied!');
             }).catch(() => {
-                // Fallback
                 const input = document.createElement('input');
                 input.value = link;
                 document.body.appendChild(input);
@@ -433,14 +418,9 @@
             document.getElementById('inviteModal').classList.remove('show');
         }
 
-        // Close on overlay click
         document.getElementById('inviteModal').addEventListener('click', (e) => {
             if (e.target === e.currentTarget) closeInviteModal();
         });
-
-        // ================================================================
-        // 🔔 TOAST
-        // ================================================================
 
         function showToastInvite(msg) {
             const toast = document.getElementById('toastInvite');
@@ -459,26 +439,16 @@
             const code = urlParams.get('invite');
 
             if (code) {
-                // Check if code matches stored invite OR if it's a valid code
-                if (inviteCode && code === inviteCode) {
+                if (/^[A-Z0-9]{8}$/.test(code)) {
+                    // Valid format - store it
+                    localStorage.setItem('nexus_invite_code', code);
+                    inviteCode = code;
                     sessionStorage.setItem('nexus_trusted', 'true');
                     sessionStorage.setItem('nexus_invite_code', code);
                     showToastInvite('✅ Welcome! You have access to NEXUS AI.');
-                    // Remove code from URL
                     window.history.replaceState({}, document.title, window.location.pathname);
-                } else if (code) {
-                    // Check if code is valid format
-                    if (/^[A-Z0-9]{8}$/.test(code)) {
-                        // Valid format - store it
-                        localStorage.setItem('nexus_invite_code', code);
-                        inviteCode = code;
-                        sessionStorage.setItem('nexus_trusted', 'true');
-                        sessionStorage.setItem('nexus_invite_code', code);
-                        showToastInvite('✅ Access granted! Welcome to NEXUS AI.');
-                        window.history.replaceState({}, document.title, window.location.pathname);
-                    } else {
-                        showToastInvite('❌ Invalid invite code.');
-                    }
+                } else {
+                    showToastInvite('❌ Invalid invite code.');
                 }
             }
         }
@@ -487,7 +457,6 @@
         // 🏃 INIT
         // ================================================================
 
-        // Generate initial code if none exists
         if (!inviteCode) {
             generateInvite();
         }
@@ -497,7 +466,6 @@
         console.log('🚀 NEXUS AI - Invite System');
         console.log(`🔗 Invite Link: ${SITE_URL}/?invite=${inviteCode}`);
         console.log('💡 Share this link with friends!');
-        console.log('📱 Chats are saved to your device automatically.');
     </script>
 
 </body>
