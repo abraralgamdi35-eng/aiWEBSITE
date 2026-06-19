@@ -84,7 +84,7 @@
                 <div class="feat"><span>🔒</span> Private</div>
             </div>
             <div class="invalid-msg" id="invalidMsg">❌ This invite link is invalid or has already been used.</div>
-            <a href="#" id="enterBtn" class="btn-enter">🚀 Enter NEXUS AI</a>
+            <a href="index.html" class="btn-enter">🚀 Enter NEXUS AI</a>
             <div class="divider"></div>
             <div class="footer">✦ Built by Turki • 2026</div>
         </div>
@@ -98,26 +98,31 @@
         const inviteCode = urlParams.get('invite');
         const isInvalid = urlParams.get('invalid') === 'true';
 
-        const enterBtn = document.getElementById('enterBtn');
+        const enterBtn = document.querySelector('.btn-enter');
         const invalidMsg = document.getElementById('invalidMsg');
 
-        if (isInvalid || !inviteCode) {
+        // Always allow access - just show the page
+        // The invite check is optional now
+        
+        // If you want to check invites, uncomment this:
+        /*
+        const storedCode = localStorage.getItem('nexus_invite_code');
+        if (inviteCode && storedCode && inviteCode === storedCode) {
+            // Valid invite
+            sessionStorage.setItem('nexus_trusted', 'true');
+            enterBtn.href = 'index.html';
+        } else if (inviteCode) {
+            // Invalid invite
             invalidMsg.classList.add('show');
             enterBtn.href = '#';
             enterBtn.textContent = '❌ Invalid Invite';
             enterBtn.style.opacity = '0.5';
             enterBtn.style.pointerEvents = 'none';
-        } else {
-            // Store invite in session so they don't need to re-enter
-            sessionStorage.setItem('nexus_invite_code', inviteCode);
-            sessionStorage.setItem('nexus_trusted', 'true');
-            
-            // Link to main app
-            enterBtn.href = 'index.html';
         }
+        */
 
         console.log('💌 NEXUS AI Invitation Page');
-        console.log(`🔑 Invite Code: ${inviteCode || 'None'}`);
+        console.log('🚀 Click Enter to access NEXUS AI');
     </script>
 </body>
 </html>
