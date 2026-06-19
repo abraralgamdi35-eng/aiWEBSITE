@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="styles.css" />
     
     <style>
+        /* ===== INVITE BUTTON ===== */
         .invite-btn {
             display: inline-flex;
             align-items: center;
@@ -37,6 +38,7 @@
             font-size: 16px;
         }
 
+        /* ===== INVITE MODAL ===== */
         .invite-modal-overlay {
             position: fixed;
             top: 0;
@@ -273,6 +275,7 @@
     <!-- ===== APP ===== -->
     <div class="app-container">
 
+        <!-- ===== SIDEBAR ===== -->
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
                 <a href="index.html" class="logo">
@@ -291,6 +294,7 @@
             </div>
         </aside>
 
+        <!-- ===== MAIN CHAT ===== -->
         <main class="main-chat">
 
             <header class="chat-header">
@@ -340,133 +344,6 @@
     </div>
 
     <script src="script.js"></script>
-
-    <script>
-        // ================================================================
-        // 🔗 FULL INVITE LINK SYSTEM
-        // ================================================================
-
-        const SITE_URL = 'https://abraralgamdi35-eng.github.io/aiWEBSITE';
-
-        let inviteCode = localStorage.getItem('nexus_invite_code');
-
-        function generateInvite() {
-            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-            let code = '';
-            for (let i = 0; i < 8; i++) {
-                code += chars.charAt(Math.floor(Math.random() * chars.length));
-            }
-            inviteCode = code;
-            localStorage.setItem('nexus_invite_code', inviteCode);
-            updateInviteDisplay();
-            showToastInvite('✅ New invite link generated!');
-        }
-
-        function updateInviteDisplay() {
-            const display = document.getElementById('inviteLinkDisplay');
-            if (inviteCode) {
-                display.textContent = `${SITE_URL}/?invite=${inviteCode}`;
-            } else {
-                display.textContent = `${SITE_URL}/?invite=------`;
-            }
-        }
-
-        function copyInviteLink() {
-            const link = document.getElementById('inviteLinkDisplay').textContent;
-            if (link.includes('------')) {
-                showToastInvite('⚠️ Generate a link first!');
-                return;
-            }
-            navigator.clipboard.writeText(link).then(() => {
-                showToastInvite('📋 Link copied!');
-            }).catch(() => {
-                const input = document.createElement('input');
-                input.value = link;
-                document.body.appendChild(input);
-                input.select();
-                document.execCommand('copy');
-                document.body.removeChild(input);
-                showToastInvite('📋 Link copied!');
-            });
-        }
-
-        function shareInviteLink() {
-            const link = document.getElementById('inviteLinkDisplay').textContent;
-            if (link.includes('------')) {
-                showToastInvite('⚠️ Generate a link first!');
-                return;
-            }
-            
-            if (navigator.share) {
-                navigator.share({
-                    title: 'NEXUS AI Invite',
-                    text: 'Join me on NEXUS AI - a free AI assistant!',
-                    url: link
-                }).catch(() => {});
-            } else {
-                copyInviteLink();
-                showToastInvite('📋 Link copied - share it with friends!');
-            }
-        }
-
-        function openInviteModal() {
-            updateInviteDisplay();
-            document.getElementById('inviteModal').classList.add('show');
-        }
-
-        function closeInviteModal() {
-            document.getElementById('inviteModal').classList.remove('show');
-        }
-
-        document.getElementById('inviteModal').addEventListener('click', (e) => {
-            if (e.target === e.currentTarget) closeInviteModal();
-        });
-
-        function showToastInvite(msg) {
-            const toast = document.getElementById('toastInvite');
-            toast.textContent = msg;
-            toast.classList.add('show');
-            clearTimeout(toast._timer);
-            toast._timer = setTimeout(() => toast.classList.remove('show'), 2500);
-        }
-
-        // ================================================================
-        // 🔗 CHECK INVITE IN URL
-        // ================================================================
-
-        function checkInviteAccess() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const code = urlParams.get('invite');
-
-            if (code) {
-                if (/^[A-Z0-9]{8}$/.test(code)) {
-                    // Valid format - store it
-                    localStorage.setItem('nexus_invite_code', code);
-                    inviteCode = code;
-                    sessionStorage.setItem('nexus_trusted', 'true');
-                    sessionStorage.setItem('nexus_invite_code', code);
-                    showToastInvite('✅ Welcome! You have access to NEXUS AI.');
-                    window.history.replaceState({}, document.title, window.location.pathname);
-                } else {
-                    showToastInvite('❌ Invalid invite code.');
-                }
-            }
-        }
-
-        // ================================================================
-        // 🏃 INIT
-        // ================================================================
-
-        if (!inviteCode) {
-            generateInvite();
-        }
-
-        checkInviteAccess();
-
-        console.log('🚀 NEXUS AI - Invite System');
-        console.log(`🔗 Invite Link: ${SITE_URL}/?invite=${inviteCode}`);
-        console.log('💡 Share this link with friends!');
-    </script>
 
 </body>
 </html>
