@@ -4,126 +4,105 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Privacy Policy - NEXUS AI</title>
-    <link rel="stylesheet" href="styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
     <style>
-        /* ===== OVERRIDE FOR POLICY PAGES ===== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            overflow-y: auto;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #0a0a0f;
+            color: #e8e8e8;
             padding: 40px 20px;
-            background: var(--bg-primary);
+            min-height: 100vh;
         }
-        .policy-container {
+        .container {
             max-width: 800px;
             margin: 0 auto;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius);
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 16px;
             padding: 50px 60px;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.3);
         }
-        .policy-container h1 {
-            font-size: 32px;
-            margin-bottom: 8px;
-            background: var(--accent-gradient-text);
+        .header { text-align: center; margin-bottom: 40px; }
+        .logo { font-size: 48px; display: block; margin-bottom: 8px; text-decoration: none; }
+        .logo-text {
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #a78bfa, #60a5fa, #34d399);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            text-decoration: none;
         }
-        .policy-container .last-updated {
-            color: var(--text-muted);
-            font-size: 14px;
-            margin-bottom: 30px;
-        }
-        .policy-container .divider {
-            height: 1px;
-            background: var(--border-color);
-            margin: 30px 0;
-        }
-        .policy-container h2 {
-            font-size: 20px;
-            color: var(--accent);
-            margin-top: 30px;
-            margin-bottom: 12px;
-        }
-        .policy-container p {
-            color: var(--text-secondary);
-            line-height: 1.8;
-            font-size: 15px;
-            margin-bottom: 12px;
-        }
-        .policy-container ul {
-            color: var(--text-secondary);
-            line-height: 1.8;
-            font-size: 15px;
-            padding-left: 24px;
-            margin-bottom: 16px;
-        }
-        .policy-container ul li { margin-bottom: 6px; }
-        .policy-container .back-link {
+        h1 { font-size: 32px; margin-top: 20px; color: #ffffff; }
+        .last-updated { color: rgba(255, 255, 255, 0.3); font-size: 14px; margin-top: 8px; }
+        .divider { height: 1px; background: rgba(255, 255, 255, 0.04); margin: 30px 0; }
+        h2 { font-size: 20px; color: #a78bfa; margin-top: 30px; margin-bottom: 12px; }
+        p { color: rgba(255, 255, 255, 0.7); line-height: 1.8; font-size: 15px; margin-bottom: 12px; }
+        ul { color: rgba(255, 255, 255, 0.7); line-height: 1.8; font-size: 15px; padding-left: 24px; margin-bottom: 16px; }
+        ul li { margin-bottom: 6px; }
+        .back-link {
             display: inline-block;
             margin-top: 30px;
             padding: 12px 24px;
-            background: var(--accent-glow);
+            background: rgba(108, 60, 255, 0.15);
             border: 1px solid rgba(108, 60, 255, 0.2);
-            border-radius: var(--radius-sm);
-            color: var(--accent);
+            border-radius: 10px;
+            color: #a78bfa;
             text-decoration: none;
-            transition: var(--transition);
-            font-weight: 500;
+            transition: 0.3s;
         }
-        .policy-container .back-link:hover {
-            background: var(--accent);
-            color: white;
-        }
+        .back-link:hover { background: rgba(108, 60, 255, 0.25); }
+        .footer { margin-top: 40px; padding-top: 24px; border-top: 1px solid rgba(255, 255, 255, 0.04); text-align: center; color: rgba(255, 255, 255, 0.2); font-size: 13px; }
         @media (max-width: 768px) {
-            .policy-container { padding: 30px 24px; }
-            .policy-container h1 { font-size: 24px; }
+            .container { padding: 30px 24px; }
+            h1 { font-size: 24px; }
+            .logo-text { font-size: 22px; }
         }
     </style>
 </head>
 <body>
-    <div class="policy-container">
-        <h1>Privacy Policy</h1>
-        <p class="last-updated">Last Updated: June 2026</p>
-        
+    <div class="container">
+        <div class="header">
+            <a href="index.html" class="logo">✦</a>
+            <a href="index.html" class="logo-text">NEXUS AI</a>
+            <h1>Privacy Policy</h1>
+            <p class="last-updated">Last Updated: June 2026</p>
+        </div>
         <div class="divider"></div>
-        
         <h2>1. Information We Collect</h2>
         <p>NEXUS AI collects minimal information:</p>
         <ul>
-            <li><strong>Chat History:</strong> Stored locally in your browser</li>
+            <li><strong>Chat History:</strong> Stored locally on your device</li>
             <li><strong>Chat Codes:</strong> Unique identifiers for each chat session</li>
             <li><strong>No Personal Data:</strong> We don't collect emails, names, or any personal information</li>
         </ul>
-        
         <h2>2. How We Use Your Data</h2>
         <ul>
             <li>To provide the AI chat service</li>
             <li>To remember your conversation history</li>
             <li>To enable sharing via chat codes</li>
         </ul>
-        
         <h2>3. Data Storage</h2>
         <p>All data is stored locally in your browser's localStorage. No data is sent to any server except:</p>
         <ul>
             <li><strong>Groq API:</strong> Your messages are sent to Groq for AI processing</li>
             <li><strong>SearXNG:</strong> For web search functionality</li>
         </ul>
-        
         <h2>4. Security</h2>
         <ul>
             <li>All chats are identified by unique 6-character codes</li>
-            <li>Your chat history is only accessible in your browser</li>
+            <li>Your chat history is only accessible on your device</li>
             <li>No personal information is ever stored or transmitted</li>
         </ul>
-        
         <h2>5. Your Rights</h2>
         <ul>
             <li>Export your chat history</li>
             <li>Delete individual chats</li>
             <li>Clear all data from your browser</li>
         </ul>
-        
         <div class="divider"></div>
         <a href="index.html" class="back-link">← Back to NEXUS AI</a>
+        <div class="footer">✦ Built by Turki ✦</div>
     </div>
 </body>
 </html>
