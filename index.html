@@ -215,6 +215,158 @@
             opacity: 1;
         }
 
+        /* ===== IMAGE GENERATION STYLES ===== */
+        .generated-image-container {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            padding: 12px;
+            margin: 8px 0;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            animation: imagePop 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        @keyframes imagePop {
+            0% { opacity: 0; transform: scale(0.95); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        .generated-image-container img {
+            display: block;
+            width: 100%;
+            max-width: 512px;
+            max-height: 512px;
+            border-radius: 8px;
+            margin: 0 auto;
+            background: #0d0d1a;
+            object-fit: contain;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .generated-image-container .image-label {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-align: center;
+            padding: 8px 0 4px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .generated-image-container .image-label .dot {
+            width: 4px;
+            height: 4px;
+            background: var(--green);
+            border-radius: 50%;
+            display: inline-block;
+            animation: dotPulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes dotPulse {
+            0%, 100% { opacity: 0.3; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        .image-loading-overlay {
+            position: relative;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 8px;
+            padding: 40px 20px;
+            text-align: center;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        .image-loading-overlay .spinner {
+            width: 48px;
+            height: 48px;
+            border: 3px solid rgba(108, 60, 255, 0.1);
+            border-top-color: #a78bfa;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .image-loading-overlay .loading-text {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-top: 16px;
+            font-weight: 500;
+        }
+
+        .image-loading-overlay .loading-dots {
+            display: inline-block;
+        }
+
+        .image-loading-overlay .loading-dots span {
+            display: inline-block;
+            animation: dotBounce 1.4s ease-in-out infinite;
+        }
+
+        .image-loading-overlay .loading-dots span:nth-child(2) { animation-delay: 0.2s; }
+        .image-loading-overlay .loading-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes dotBounce {
+            0%, 80%, 100% { transform: translateY(0); opacity: 0.3; }
+            40% { transform: translateY(-6px); opacity: 1; }
+        }
+
+        .image-loading-overlay .progress-bar {
+            width: 100%;
+            max-width: 300px;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            margin-top: 12px;
+            overflow: hidden;
+        }
+
+        .image-loading-overlay .progress-bar .fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #6c3cff, #a78bfa, #34d399);
+            border-radius: 10px;
+            animation: progressFill 8s ease-in-out infinite;
+        }
+
+        @keyframes progressFill {
+            0% { width: 0%; }
+            20% { width: 20%; }
+            50% { width: 55%; }
+            80% { width: 85%; }
+            100% { width: 95%; }
+        }
+
+        .image-loading-overlay .retry-btn {
+            margin-top: 12px;
+            padding: 6px 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 6px;
+            color: var(--text-muted);
+            font-size: 12px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: var(--font);
+            display: none;
+        }
+
+        .image-loading-overlay .retry-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+        }
+
+        .image-loading-overlay .retry-btn.show {
+            display: inline-block;
+        }
+
         @media (max-width: 500px) {
             .invite-modal {
                 padding: 24px 18px;
@@ -224,6 +376,13 @@
             }
             .invite-modal .link-box .link {
                 font-size: 13px;
+            }
+            .generated-image-container img {
+                max-height: 300px;
+            }
+            .image-loading-overlay {
+                min-height: 150px;
+                padding: 24px 16px;
             }
         }
     </style>
@@ -316,19 +475,21 @@
                 <div class="welcome-screen">
                     <span class="icon">✦</span>
                     <h1>NEXUS AI</h1>
-                    <p>Your intelligent assistant with free web search. Ask me anything!</p>
+                    <p>I can answer questions AND generate images! 🎨</p>
                     <div class="features">
-                        <div class="feat"><span>🔍</span> Web Search</div>
-                        <div class="feat"><span>💻</span> Code</div>
-                        <div class="feat"><span>🧠</span> Memory</div>
-                        <div class="feat"><span>🔒</span> Private</div>
+                        <div class="feat"><span>🎪</span> TADC</div>
+                        <div class="feat"><span>🎵</span> OR3O</div>
+                        <div class="feat"><span>🏢</span> CEOs</div>
+                        <div class="feat"><span>🔢</span> Math</div>
+                        <div class="feat"><span>🎨</span> Images</div>
+                        <div class="feat"><span>🔍</span> Search</div>
                     </div>
                 </div>
             </div>
 
             <div class="input-container">
                 <div class="input-wrapper">
-                    <input type="text" id="userInput" placeholder="Ask me anything..." />
+                    <input type="text" id="userInput" placeholder="Ask me anything... or say 'draw a cat'" />
                     <button id="sendBtn">Send</button>
                 </div>
                 <div class="input-footer">
@@ -344,6 +505,98 @@
     </div>
 
     <script src="script.js"></script>
+
+    <script>
+        // ================================================================
+        // 🔗 INVITE SYSTEM
+        // ================================================================
+
+        const SITE_URL = 'https://abraralgamdi35-eng.github.io/aiWEBSITE';
+        let inviteCode = localStorage.getItem('nexus_invite_code');
+
+        function generateInvite() {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let code = '';
+            for (let i = 0; i < 8; i++) {
+                code += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            inviteCode = code;
+            localStorage.setItem('nexus_invite_code', inviteCode);
+            updateInviteDisplay();
+            showToastInvite('✅ New invite link generated!');
+        }
+
+        function updateInviteDisplay() {
+            const display = document.getElementById('inviteLinkDisplay');
+            if (inviteCode) {
+                display.textContent = `${SITE_URL}/?invite=${inviteCode}`;
+            } else {
+                display.textContent = `${SITE_URL}/?invite=------`;
+            }
+        }
+
+        function copyInviteLink() {
+            const link = document.getElementById('inviteLinkDisplay').textContent;
+            if (link.includes('------')) {
+                showToastInvite('⚠️ Generate a link first!');
+                return;
+            }
+            navigator.clipboard.writeText(link).then(() => {
+                showToastInvite('📋 Link copied!');
+            }).catch(() => {
+                const input = document.createElement('input');
+                input.value = link;
+                document.body.appendChild(input);
+                input.select();
+                document.execCommand('copy');
+                document.body.removeChild(input);
+                showToastInvite('📋 Link copied!');
+            });
+        }
+
+        function shareInviteLink() {
+            const link = document.getElementById('inviteLinkDisplay').textContent;
+            if (link.includes('------')) {
+                showToastInvite('⚠️ Generate a link first!');
+                return;
+            }
+            if (navigator.share) {
+                navigator.share({
+                    title: 'NEXUS AI Invite',
+                    text: 'Join me on NEXUS AI - a free AI assistant with image generation!',
+                    url: link
+                }).catch(() => {});
+            } else {
+                copyInviteLink();
+                showToastInvite('📋 Link copied - share it with friends!');
+            }
+        }
+
+        function openInviteModal() {
+            updateInviteDisplay();
+            document.getElementById('inviteModal').classList.add('show');
+        }
+
+        function closeInviteModal() {
+            document.getElementById('inviteModal').classList.remove('show');
+        }
+
+        document.getElementById('inviteModal').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) closeInviteModal();
+        });
+
+        function showToastInvite(msg) {
+            const toast = document.getElementById('toastInvite');
+            toast.textContent = msg;
+            toast.classList.add('show');
+            clearTimeout(toast._timer);
+            toast._timer = setTimeout(() => toast.classList.remove('show'), 2500);
+        }
+
+        if (!inviteCode) {
+            generateInvite();
+        }
+    </script>
 
 </body>
 </html>
