@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NEXUS AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+    <div class="toast" id="toast"></div>
+
+    <div class="app-container">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <a href="index.html" class="logo">
+                    <span class="logo-icon">✦</span>
+                    <span class="logo-text">NEXUS AI</span>
+                </a>
+                <button class="sidebar-close" onclick="toggleSidebar()">✕</button>
+            </div>
+            <div class="sidebar-content">
+                <div class="section-label">Recent Chats</div>
+                <div id="chatList"><div class="empty-state">No chats yet</div></div>
+            </div>
+            <div class="sidebar-footer">
+                <button class="btn-new" onclick="newChat()">✨ New Chat</button>
+                <button class="btn-clear" onclick="clearAllChats()">🗑️ Clear</button>
+            </div>
+        </aside>
+
+        <!-- MAIN CHAT -->
+        <main class="main-chat">
+
+            <header class="chat-header">
+                <div class="left">
+                    <button class="hamburger" onclick="toggleSidebar()">☰</button>
+                    <div class="title">NEXUS <span>AI</span></div>
+                </div>
+                <div class="right">
+                    <button class="header-btn" onclick="newChat()">✨ New</button>
+                    <button class="header-btn" onclick="location.reload()">⟳</button>
+                    <button class="header-btn mobile-show" onclick="toggleSidebar()">📂</button>
+                </div>
+            </header>
+
+            <div class="messages-container" id="messagesContainer">
+                <div class="welcome-screen" id="welcomeScreen">
+                    <span class="icon">✦</span>
+                    <h1>NEXUS AI</h1>
+                    <p>Your intelligent assistant with free web search. Ask me anything!</p>
+                    <div class="features">
+                        <div class="feat"><span>🔍</span> Web Search</div>
+                        <div class="feat"><span>💻</span> Code</div>
+                        <div class="feat"><span>🧠</span> Memory</div>
+                        <div class="feat"><span>🔒</span> Private</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-container">
+                <div class="input-wrapper">
+                    <input type="text" id="userInput" placeholder="Ask me anything..." />
+                    <button id="sendBtn">Send</button>
+                </div>
+                <div class="input-footer">
+                    <a href="privacy.html">Privacy</a>
+                    <span>•</span>
+                    <a href="terms.html">Terms</a>
+                    <span>•</span>
+                    <span class="powered-by">⚡ Free Search</span>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
