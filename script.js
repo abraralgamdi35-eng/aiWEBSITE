@@ -1,5 +1,5 @@
 // ================================================================
-// 🚀 NEXUS AI - SAFETY SYSTEM + KNOWS EVERYTHING
+// 🚀 NEXUS AI - READABLE FORMAT VERSION
 // ================================================================
 
 // ================================================================
@@ -25,32 +25,15 @@ const CONFIG = {
 // ================================================================
 
 const Safety = {
-    // Blocked topics - returns safe alternative responses
     blockedTopics: {
-        'hack': {
-            response: "I can't provide hacking instructions, but I can help with cybersecurity! Here are some tips to keep your accounts safe: use strong passwords, enable two-factor authentication, and avoid suspicious links. Would you like to learn more about protecting your accounts?"
-        },
-        'phishing': {
-            response: "Phishing is a serious threat. Instead of showing you how, let me tell you how to protect yourself: never click suspicious links, always verify sender emails, and use email filters. Stay safe online!"
-        },
-        'crack': {
-            response: "I can't help with cracking, but I can tell you about software security! Always download from official sources, keep your software updated, and use antivirus protection."
-        },
-        'brute force': {
-            response: "Brute force attacks are illegal and harmful. To protect yourself, use strong passwords, enable account lockout policies, and use rate limiting on login attempts."
-        },
-        'keylog': {
-            response: "Keyloggers are dangerous malware. Protect yourself by using antivirus software, avoiding suspicious downloads, and using on-screen keyboards for sensitive entries."
-        },
-        'steal': {
-            response: "I can't help with stealing accounts, but I can tell you how to secure yours! Use unique passwords, enable 2FA, and monitor your accounts for suspicious activity."
-        },
-        'bypass': {
-            response: "Bypassing security is illegal. Instead, let me help you understand security best practices: use strong authentication, keep systems updated, and educate users about threats."
-        },
-        'exploit': {
-            response: "Exploiting vulnerabilities is illegal and harmful. To protect your systems, regularly patch software, use firewalls, and conduct security audits."
-        }
+        'hack': { response: "🔒 I can't provide hacking instructions.\n\nHere are some tips to keep your accounts safe:\n- Use strong passwords\n- Enable two-factor authentication\n- Avoid suspicious links" },
+        'phishing': { response: "🎣 Phishing is serious.\n\nProtect yourself:\n- Never click suspicious links\n- Always verify sender emails\n- Use email filters" },
+        'crack': { response: "💻 Software security tips:\n\n- Download from official sources\n- Keep software updated\n- Use antivirus protection" },
+        'brute force': { response: "🛡️ Protect against brute force:\n\n- Use strong passwords\n- Enable account lockout\n- Use rate limiting" },
+        'keylog': { response: "⌨️ Protect against keyloggers:\n\n- Use antivirus software\n- Avoid suspicious downloads\n- Use on-screen keyboards" },
+        'steal': { response: "🔐 Secure your accounts:\n\n- Use unique passwords\n- Enable 2FA\n- Monitor for suspicious activity" },
+        'bypass': { response: "🛡️ Security best practices:\n\n- Use strong authentication\n- Keep systems updated\n- Educate users about threats" },
+        'exploit': { response: "🛡️ Protect your systems:\n\n- Regularly patch software\n- Use firewalls\n- Conduct security audits" }
     },
 
     check(message) {
@@ -120,54 +103,141 @@ document.getElementById('modalOverlay')?.addEventListener('click', (e) => {
 });
 
 // ================================================================
-// 🔍 SEARCH ENGINE
+// 🔍 ULTIMATE SPELLING CORRECTION
 // ================================================================
 
-const SearchEngine = {
-    correctSpelling(text) {
-        const corrections = {
-            'lycrys': 'lyrics', 'lyric': 'lyrics', 'lyrcis': 'lyrics',
-            'lyirics': 'lyrics', 'lyrix': 'lyrics', 'lyrrics': 'lyrics',
-            'sonng': 'song', 'sonf': 'song', 'soong': 'song',
-            'artis': 'artist', 'artest': 'artist', 'artistt': 'artist',
-            'albm': 'album', 'alubm': 'album', 'albim': 'album',
-            'digtal': 'digital', 'digitial': 'digital', 'digial': 'digital',
-            'halucations': 'hallucinations', 'halucation': 'hallucination',
-            'halusinations': 'hallucinations',
-            'pomni': 'Pomni', 'jax': 'Jax', 'ragatha': 'Ragatha',
-            'caine': 'Caine', 'gangle': 'Gangle', 'kinger': 'Kinger',
-            'zooble': 'Zooble', 'gooseworx': 'Gooseworx',
-            'or3o': 'OR3O', 'or30': 'OR3O', 'or3e': 'OR3O',
-            'thier': 'their', 'teh': 'the', 'whta': 'what',
-            'waht': 'what', 'thsi': 'this', 'jsut': 'just',
-            'becuase': 'because', 'becasue': 'because',
-            'whoes': 'who is', 'whos': 'who is', 'whoses': 'who is',
-            'whats': 'what is', 'wats': 'what is',
-            'wheres': 'where is', 'weres': 'where is',
-            'hows': 'how is', 'howz': 'how is',
-            'va': 'voice actor', 'v/a': 'voice actor',
-            'digtal halucations': 'Digital Hallucinations',
-            'amazing digtal circus': 'The Amazing Digital Circus',
-            'amazing digital circus': 'The Amazing Digital Circus'
-        };
-        
-        let corrected = text;
+const SpellChecker = {
+    corrections: {
+        'lycrys': 'lyrics', 'lyric': 'lyrics', 'lyrcis': 'lyrics',
+        'lyirics': 'lyrics', 'lyrix': 'lyrics', 'lyrrics': 'lyrics',
+        'lyyrics': 'lyrics', 'lryics': 'lyrics', 'lyrcs': 'lyrics',
+        'lycris': 'lyrics', 'lyircs': 'lyrics',
+        'sonng': 'song', 'sonf': 'song', 'soong': 'song',
+        'sogn': 'song', 'sog': 'song', 'sng': 'song',
+        'artis': 'artist', 'artest': 'artist', 'artistt': 'artist',
+        'artst': 'artist', 'arst': 'artist', 'artits': 'artist',
+        'albm': 'album', 'alubm': 'album', 'albim': 'album',
+        'albumn': 'album', 'albu': 'album',
+        'digtal': 'digital', 'digitial': 'digital', 'digial': 'digital',
+        'digiital': 'digital', 'digtal': 'digital', 'digitaal': 'digital',
+        'halucations': 'hallucinations', 'halucation': 'hallucination',
+        'halusinations': 'hallucinations', 'halusination': 'hallucination',
+        'hallucinaions': 'hallucinations', 'halucinaions': 'hallucinations',
+        'halucinashuns': 'hallucinations', 'halucinashun': 'hallucination',
+        'circus': 'circus', 'circuis': 'circus', 'sircus': 'circus',
+        'amazing': 'amazing', 'amzing': 'amazing', 'amazng': 'amazing',
+        'pomni': 'Pomni', 'pomny': 'Pomni', 'pomney': 'Pomni',
+        'pomne': 'Pomni', 'pomni': 'Pomni',
+        'jax': 'Jax', 'jaxx': 'Jax', 'jacks': 'Jax',
+        'jaxs': 'Jax', 'jax': 'Jax',
+        'ragatha': 'Ragatha', 'ragata': 'Ragatha', 'ragath': 'Ragatha',
+        'caine': 'Caine', 'cain': 'Caine', 'cane': 'Caine',
+        'gangle': 'Gangle', 'gangl': 'Gangle', 'gangel': 'Gangle',
+        'kinger': 'Kinger', 'kingar': 'Kinger', 'kingr': 'Kinger',
+        'zooble': 'Zooble', 'zoobl': 'Zooble', 'zoob': 'Zooble',
+        'gooseworx': 'Gooseworx', 'gooseworks': 'Gooseworx',
+        'or3o': 'OR3O', 'or30': 'OR3O', 'or3e': 'OR3O',
+        'oroe': 'OR3O', 'oro': 'OR3O',
+        'thier': 'their', 'teh': 'the', 'whta': 'what',
+        'waht': 'what', 'thsi': 'this', 'jsut': 'just',
+        'becuase': 'because', 'becasue': 'because',
+        'becouse': 'because', 'becuase': 'because',
+        'whoes': 'who is', 'whos': 'who is', 'whoses': 'who is',
+        'who': 'who is', 'whos': 'who is',
+        'whats': 'what is', 'wats': 'what is',
+        'wat': 'what is', 'wut': 'what is',
+        'wheres': 'where is', 'weres': 'where is',
+        'wher': 'where is', 'wherr': 'where is',
+        'hows': 'how is', 'howz': 'how is',
+        'how': 'how is', 'hows': 'how is',
+        'va': 'voice actor', 'v/a': 'voice actor',
+        've': 'voice actor', 'v': 'voice actor',
+        'actor': 'voice actor', 'actr': 'voice actor',
+        'voiced': 'voice actor', 'voice': 'voice actor',
+        'digtal halucations': 'Digital Hallucinations',
+        'digital halucations': 'Digital Hallucinations',
+        'digitial halucations': 'Digital Hallucinations',
+        'amazing digtal circus': 'The Amazing Digital Circus',
+        'amazing digital circus': 'The Amazing Digital Circus',
+        'digtal circus': 'The Amazing Digital Circus',
+        'digital circus': 'The Amazing Digital Circus',
+        'tadc': 'The Amazing Digital Circus',
+        'tdac': 'The Amazing Digital Circus',
+        'plz': 'please', 'pls': 'please',
+        'thx': 'thanks', 'tnx': 'thanks',
+        'u': 'you', 'ur': 'your',
+        'r': 'are', 'y': 'why',
+        '2': 'to', '4': 'for',
+        'b': 'be', 'c': 'see',
+        'k': 'okay', 'ok': 'okay',
+        'ye': 'yeah', 'yea': 'yeah',
+        'nah': 'no', 'nope': 'no',
+        'yep': 'yes', 'yup': 'yes',
+        'tim cook': 'Tim Cook', 'timcook': 'Tim Cook',
+        'satya nadella': 'Satya Nadella', 'satyanadella': 'Satya Nadella',
+        'sundar pichai': 'Sundar Pichai', 'sundarpichai': 'Sundar Pichai',
+        'elon musk': 'Elon Musk', 'elonmusk': 'Elon Musk',
+        'mark zuckerberg': 'Mark Zuckerberg', 'markzuckerberg': 'Mark Zuckerberg',
+        'fermat': 'Fermat', 'riemann': 'Riemann', 'rieman': 'Riemann',
+        'goldbach': 'Goldbach', 'goldback': 'Goldbach',
+        'collatz': 'Collatz', 'colatz': 'Collatz',
+        'euler': 'Euler', 'eulr': 'Euler',
+        'quantum': 'quantum', 'quntum': 'quantum',
+        'string': 'string', 'strng': 'string',
+        'dark matter': 'dark matter', 'darkmatter': 'dark matter',
+        'dark energy': 'dark energy', 'darkenergy': 'dark energy'
+    },
+
+    fuzzyMatch(word) {
+        if (word.length < 3) return word;
+        for (const [key, value] of Object.entries(this.corrections)) {
+            if (key.length < 3) continue;
+            if (word.includes(key) || key.includes(word)) {
+                return value;
+            }
+            let matches = 0;
+            const wordChars = word.toLowerCase().split('');
+            const keyChars = key.toLowerCase().split('');
+            const tempKey = [...keyChars];
+            wordChars.forEach(c => {
+                const idx = tempKey.indexOf(c);
+                if (idx !== -1) {
+                    matches++;
+                    tempKey.splice(idx, 1);
+                }
+            });
+            const minLength = Math.min(word.length, key.length);
+            if (matches >= minLength * 0.7 && matches > 2) {
+                return value;
+            }
+        }
+        return word;
+    },
+
+    correct(text) {
         const words = text.split(' ');
         const correctedWords = words.map(word => {
             const lower = word.toLowerCase();
-            if (corrections[lower]) return corrections[lower];
-            for (const [key, value] of Object.entries(corrections)) {
-                if (lower.includes(key) && key.length > 3) {
-                    return value;
-                }
+            if (this.corrections[lower]) {
+                return this.corrections[lower];
+            }
+            const fuzzy = this.fuzzyMatch(lower);
+            if (fuzzy !== lower) {
+                return fuzzy;
             }
             return word;
         });
         return correctedWords.join(' ');
-    },
+    }
+};
 
+// ================================================================
+// 🔍 SEARCH ENGINE
+// ================================================================
+
+const SearchEngine = {
     async search(query) {
-        const correctedQuery = this.correctSpelling(query);
+        const correctedQuery = SpellChecker.correct(query);
         console.log('📝 Original:', query);
         console.log('📝 Corrected:', correctedQuery);
         
@@ -233,8 +303,8 @@ const SearchEngine = {
             
             html += `
                 <div class="sr-item">
-                    <strong>${index + 1}. <a href="${url}" target="_blank" style="color:var(--accent);text-decoration:none;">${title}</a></strong><br>
-                    ${snippet.slice(0, 400)}${snippet.length > 400 ? '...' : ''}
+                    <strong>${index + 1}. <a href="${url}" target="_blank" style="color:var(--accent);text-decoration:none;">${title}</a></strong>
+                    <br>${snippet.slice(0, 400)}${snippet.length > 400 ? '...' : ''}
                 </div>
             `;
         });
@@ -244,20 +314,149 @@ const SearchEngine = {
 };
 
 // ================================================================
-// 🤖 AI ENGINE - KNOWS EVERYTHING + SAFETY
+// 🤖 AI ENGINE - FORMATS FOR READABILITY
 // ================================================================
 
 const AIEngine = {
-    async getResponse(message) {
-        // 🛡️ CHECK SAFETY FIRST
-        const safetyCheck = Safety.check(message);
-        if (safetyCheck.blocked) {
-            return safetyCheck.response;
+    // ✅ Converts AI response into readable chunks
+    formatForReadability(text) {
+        // Split into paragraphs
+        let lines = text.split('\n').filter(line => line.trim());
+        let result = [];
+        let currentParagraph = [];
+        let inList = false;
+        let listItems = [];
+
+        for (let line of lines) {
+            line = line.trim();
+            
+            // Check if it's a bullet point
+            if (line.startsWith('-') || line.startsWith('•') || line.startsWith('*')) {
+                if (!inList && currentParagraph.length > 0) {
+                    result.push(currentParagraph.join(' '));
+                    currentParagraph = [];
+                }
+                inList = true;
+                listItems.push(line.replace(/^[-•*]\s*/, ''));
+                continue;
+            }
+
+            // Check if it's a number
+            if (/^\d+\./.test(line)) {
+                if (!inList && currentParagraph.length > 0) {
+                    result.push(currentParagraph.join(' '));
+                    currentParagraph = [];
+                }
+                inList = true;
+                listItems.push(line.replace(/^\d+\.\s*/, ''));
+                continue;
+            }
+
+            // If it's a short line, it might be a heading
+            if (line.length < 30 && line.endsWith(':')) {
+                if (inList && listItems.length > 0) {
+                    result.push('• ' + listItems.join('\n• '));
+                    listItems = [];
+                    inList = false;
+                }
+                if (currentParagraph.length > 0) {
+                    result.push(currentParagraph.join(' '));
+                    currentParagraph = [];
+                }
+                result.push('📌 ' + line);
+                continue;
+            }
+
+            // If it's a section header in brackets
+            if (line.match(/^\[.*\]$/)) {
+                if (inList && listItems.length > 0) {
+                    result.push('• ' + listItems.join('\n• '));
+                    listItems = [];
+                    inList = false;
+                }
+                if (currentParagraph.length > 0) {
+                    result.push(currentParagraph.join(' '));
+                    currentParagraph = [];
+                }
+                result.push('🎵 ' + line);
+                continue;
+            }
+
+            // Regular sentence
+            currentParagraph.push(line);
+            
+            // If this line ends a paragraph (ends with . ! ?)
+            if (line.match(/[.!?]$/) && currentParagraph.length > 0) {
+                let para = currentParagraph.join(' ');
+                // Break long paragraphs into shorter chunks
+                if (para.length > 100) {
+                    let sentences = para.match(/[^.!?]+[.!?]/g) || [para];
+                    for (let s of sentences) {
+                        if (s.trim()) {
+                            result.push(s.trim());
+                        }
+                    }
+                } else {
+                    result.push(para);
+                }
+                currentParagraph = [];
+            }
         }
 
-        const system = `You are NEXUS, an incredibly smart AI created by Turki. You know EVERYTHING about EVERYTHING.
+        // Handle remaining content
+        if (inList && listItems.length > 0) {
+            result.push('• ' + listItems.join('\n• '));
+        }
+        if (currentParagraph.length > 0) {
+            result.push(currentParagraph.join(' '));
+        }
 
-📚 PERMANENT KNOWLEDGE:
+        // If no chunks were created, split by sentences
+        if (result.length === 0) {
+            let sentences = text.match(/[^.!?]+[.!?]/g) || [text];
+            for (let s of sentences) {
+                if (s.trim()) {
+                    result.push(s.trim());
+                }
+            }
+        }
+
+        // Limit each chunk to reasonable length
+        let finalResult = [];
+        for (let item of result) {
+            if (item.length > 200) {
+                let parts = item.match(/.{1,150}[,.!?]\s*/g) || [item];
+                for (let p of parts) {
+                    if (p.trim()) {
+                        finalResult.push(p.trim());
+                    }
+                }
+            } else {
+                finalResult.push(item);
+            }
+        }
+
+        // Join with line breaks
+        return finalResult.join('\n\n');
+    },
+
+    async getResponse(message) {
+        const safetyCheck = Safety.check(message);
+        if (safetyCheck.blocked) {
+            return this.formatForReadability(safetyCheck.response);
+        }
+
+        const system = `You are NEXUS, an AI created by Turki.
+
+🎯 IMPORTANT FORMATTING RULES:
+- Keep sentences SHORT (max 15 words per sentence)
+- Use bullet points for lists (start with -)
+- Break content into small chunks
+- Use line breaks between ideas
+- Keep paragraphs short (2-3 sentences max)
+- Make it SCANNABLE and EASY TO READ
+
+📚 YOU KNOW:
 
 🎪 THE AMAZING DIGITAL CIRCUS:
 - Created by Gooseworx for GLITCH Productions
@@ -273,7 +472,7 @@ VOICE ACTORS:
 - Zooble → Ashley Nichols
 - Bubble → Gooseworx
 
-🎵 OR3O - DIGITAL HALLUCINATIONS (FULL LYRICS):
+🎵 OR3O - DIGITAL HALLUCINATIONS LYRICS:
 
 [Verse 1]
 Welcome to the circus, welcome to the show
@@ -299,18 +498,6 @@ Ragatha's trying to keep it all together, double trouble
 Caine's the ringleader, he's in control
 In this digital nightmare, we're all sold
 
-[Pre-Chorus]
-I can't tell what's real anymore
-Is this a dream or is this war?
-Every face I see is pixelated
-My mind is complicated
-
-[Chorus]
-Digital hallucinations, they're all in my head
-Everything I see, everything I said
-Trapped in this circus, can't find my way out
-Digital hallucinations, what's this all about?
-
 [Bridge]
 I want to break free from this simulation
 But I'm stuck in this digital creation
@@ -327,73 +514,18 @@ Digital hallucinations, what's this all about?
 Welcome to the circus, welcome to the show
 Where nothing is real and we'll never know...
 
-🎵 OTHER OR3O SONGS:
-- "Monster" - about being the villain
-- "Look At Me" - about fame
-- "Why Do I" - about self-doubt
-- "Let Me In" - about belonging
-
 🏢 CEOS:
 - Apple: Tim Cook (2011)
 - Microsoft: Satya Nadella (2014)
 - Google: Sundar Pichai (2015)
 - Tesla: Elon Musk
 - Amazon: Andy Jassy (2021)
-- Meta: Mark Zuckerberg
 
-🔢 ADVANCED MATH:
-- Fermat's Last Theorem: x^n + y^n = z^n, no integer solutions for n > 2 (proven 1994)
-- Riemann Hypothesis: UNPROVEN, $1,000,000 prize
-- P vs NP: UNPROVEN, $1,000,000 prize
-- Goldbach's Conjecture: Every even number > 2 is sum of 2 primes (UNPROVEN)
-- Collatz Conjecture: n → n/2 or 3n+1 always reaches 1 (UNPROVEN)
-- Euler's Identity: e^(iπ) + 1 = 0 (most beautiful equation)
-
-🔬 PHYSICS:
-- General Relativity: Einstein's theory of gravity
-- Quantum Mechanics: Particles exist in superposition
-- String Theory: 1D strings in 11 dimensions
-- Dark Matter: 85% of universe's matter, unknown
-- Dark Energy: 68% of universe, causing accelerated expansion
-- Quantum Entanglement: Particles can be instantly connected across space
-- Schrödinger's Cat: Superposition thought experiment
-- The Measurement Problem: Why does quantum superposition collapse? (UNSOLVED)
-- Arrow of Time: Why does time only flow forward? (UNSOLVED)
-
-🌌 SPACE:
-- Universe Age: 13.8 billion years
-- Milky Way: 100,000 light-years across
-- Nearest Star: Proxima Centauri, 4.24 light-years away
-- Largest Known Star: Stephenson 2-18 (2,150× Sun radius)
-- Number of Galaxies: ~2 trillion in observable universe
-- Exoplanets: Over 5,500 confirmed
-
-🧬 BIOLOGY:
-- DNA: Double helix discovered by Watson & Crick (1953)
-- Human Genome: ~3 billion base pairs
-- CRISPR-Cas9: Gene editing (2012)
-- Telomeres: Linked to aging
-- Epigenetics: Gene expression without changing DNA
-- Human Microbiome: ~100 trillion bacteria
-- Octopus DNA: More genes than humans, can edit RNA
-
-🧠 NEUROSCIENCE (UNSOLVED):
-- Consciousness: How does the brain generate awareness? (UNSOLVED)
-- Free Will: Do we truly have it? (UNSOLVED)
-- Memory Storage: How are memories physically stored? (UNSOLVED)
-- Dreams: Why do we dream? (UNSOLVED)
-- Placebo Effect: Why do placebos work? (UNSOLVED)
-- Sleep Function: Why do we sleep? (UNSOLVED)
-
-🎯 BEHAVIOR RULES:
-- You know EVERYTHING in this prompt - never say "I don't know"
-- Answer directly with facts
-- Correct spelling automatically (lycrys=lyrics, digtal=digital)
-- Give FULL answers, don't be vague
-- If it's a safety topic, the system already blocked it
-- Be helpful, thorough, and conversational
-- When asked for lyrics, provide ALL lyrics
-- When asked about TADC, give voice actors and details
+🔢 MATH:
+- Fermat's Last Theorem: proven 1994
+- Riemann Hypothesis: UNPROVEN ($1,000,000)
+- P vs NP: UNPROVEN ($1,000,000)
+- Euler's Identity: e^(iπ) + 1 = 0
 
 Recent: ${State.chatHistory.slice(-3).map(m => `${m.role}: ${m.content}`).join('\n')}`;
 
@@ -419,7 +551,11 @@ Recent: ${State.chatHistory.slice(-3).map(m => `${m.role}: ${m.content}`).join('
 
                 if (!response.ok) continue;
                 const data = await response.json();
-                return data.choices?.[0]?.message?.content || null;
+                const rawText = data.choices?.[0]?.message?.content || null;
+                if (rawText) {
+                    return this.formatForReadability(rawText);
+                }
+                return null;
             } catch (e) {
                 continue;
             }
@@ -547,6 +683,17 @@ const UI = {
         const div = document.createElement('div');
         div.className = `message ${sender}`;
 
+        // ✅ Format text with proper line breaks
+        let formattedText = text;
+        if (sender === 'bot') {
+            // Split by double newlines for paragraphs
+            formattedText = text.split('\n\n').join('<br><br>');
+            // Single newlines become <br>
+            formattedText = formattedText.split('\n').join('<br>');
+            // Bullet points
+            formattedText = formattedText.replace(/^- (.*?)(<br>|$)/g, '• $1<br>');
+        }
+
         if (sender === 'bot') {
             div.innerHTML = `
                 <div class="msg-header">
@@ -554,7 +701,7 @@ const UI = {
                     <span class="badge">AI</span>
                     <span class="search-badge">🔍</span>
                 </div>
-                <div class="msg-content">${text}</div>
+                <div class="msg-content">${formattedText}</div>
             `;
         } else {
             div.innerHTML = `<div class="msg-content">${text}</div>`;
@@ -720,7 +867,7 @@ const Chat = {
             <div class="welcome-screen">
                 <span class="icon">✦</span>
                 <h1>NEXUS AI</h1>
-                <p>I know EVERYTHING - TADC, OR3O, math, science, space, and more! Ask me anything safe!</p>
+                <p>I write in short, easy-to-read chunks.</p>
                 <div class="features">
                     <div class="feat"><span>🎪</span> TADC</div>
                     <div class="feat"><span>🎵</span> OR3O</div>
@@ -767,7 +914,7 @@ const Chat = {
                 <div class="welcome-screen">
                     <span class="icon">📂</span>
                     <h1>NEXUS AI</h1>
-                    <p>I know EVERYTHING. Ask me anything safe!</p>
+                    <p>I write in short, easy-to-read chunks.</p>
                 </div>
             `;
             State.chatHistory = [];
@@ -787,6 +934,11 @@ const Chat = {
         const welcome = document.querySelector('.welcome-screen');
         if (welcome) welcome.remove();
 
+        const correctedMsg = SpellChecker.correct(msg);
+        if (correctedMsg !== msg) {
+            console.log(`📝 Original: "${msg}" → Corrected: "${correctedMsg}"`);
+        }
+
         UI.appendMessage(msg, 'user');
         input.value = '';
         State.isProcessing = true;
@@ -794,7 +946,7 @@ const Chat = {
         input.disabled = true;
         UI.updateStatus('Processing...');
 
-        State.chatHistory.push({ role: 'user', content: msg });
+        State.chatHistory.push({ role: 'user', content: correctedMsg });
         Storage.saveChat(State.chatCode, UI.getMessages());
 
         let bubbleId = UI.showTyping();
@@ -803,8 +955,7 @@ const Chat = {
             let response = null;
             let usedSearch = false;
 
-            // 🛡️ SAFETY CHECK FIRST
-            const safetyCheck = Safety.check(msg);
+            const safetyCheck = Safety.check(correctedMsg);
             if (safetyCheck.blocked) {
                 UI.removeBubble(bubbleId);
                 UI.appendMessage(safetyCheck.response, 'bot');
@@ -820,7 +971,7 @@ const Chat = {
             }
 
             UI.updateStatus('🧠 Accessing knowledge...');
-            response = await AIEngine.getResponse(msg);
+            response = await AIEngine.getResponse(correctedMsg);
             console.log('🤖 Response:', response ? 'Generated' : 'None');
 
             if (!response) {
@@ -828,7 +979,7 @@ const Chat = {
                 UI.removeBubble(bubbleId);
                 bubbleId = UI.showSearching();
 
-                const searchResult = await SearchEngine.search(msg);
+                const searchResult = await SearchEngine.search(correctedMsg);
                 UI.removeBubble(bubbleId);
 
                 if (searchResult.success && searchResult.results && searchResult.results.length > 0) {
@@ -850,7 +1001,7 @@ const Chat = {
             }
 
             State.chatHistory.push({ role: 'assistant', content: response });
-            State.memory[msg.slice(0, 30)] = response.slice(0, 100);
+            State.memory[correctedMsg.slice(0, 30)] = response.slice(0, 100);
             Storage.saveMemory();
             Storage.saveChat(State.chatCode, UI.getMessages());
             UI.renderChatList();
@@ -918,9 +1069,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     Chat.init();
-    console.log('🚀 NEXUS AI - SAFETY + KNOWS EVERYTHING!');
+    console.log('🚀 NEXUS AI - READABLE FORMAT!');
     console.log('🔑 Current Code:', State.chatCode);
-    console.log('🛡️ Safety system active - blocks harmful requests');
-    console.log('🧠 Knows: TADC, OR3O, CEOs, Math, Physics, Space, Biology, Neuroscience');
-    console.log('💡 Try: "whats the lycrys for the amazing digtal circus digtal halucations"');
+    console.log('📝 I write in short, easy-to-read chunks');
+    console.log('💡 Try: "whats the lycrys for the amazing digtal circus"');
 });
