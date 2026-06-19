@@ -1,5 +1,5 @@
 // ================================================================
-// 🚀 NEXUS AI - CHATGPT STYLE
+// 🚀 NEXUS AI - FORCED SHORT FORMAT
 // ================================================================
 
 // ================================================================
@@ -281,10 +281,9 @@ const SearchEngine = {
         };
     },
 
-    // ✅ ChatGPT-style search results with glow icon
     formatResults(data) {
         if (!data.results || data.results.length === 0) {
-            let msg = `🔍 No results found.`;
+            let msg = `🌐 No results found.`;
             if (data.corrected) msg += `\n\n💡 I understood you meant: "${data.query}"`;
             return msg;
         }
@@ -315,147 +314,112 @@ const SearchEngine = {
 };
 
 // ================================================================
-// 🤖 AI ENGINE - SHORT FORMAT
+// 🤖 AI ENGINE - FORCED SHORT FORMAT
 // ================================================================
 
 const AIEngine = {
-    formatForReadability(text) {
-        let lines = text.split('\n').filter(line => line.trim());
+    // ✅ FORCED: Break long text into short chunks
+    forceShortFormat(text) {
+        // First, split by periods and other sentence endings
+        let sentences = text.match(/[^.!?]+[.!?]/g) || [text];
+        
+        // Clean up and limit each sentence
+        let chunks = [];
+        let currentChunk = '';
+        
+        for (let sentence of sentences) {
+            sentence = sentence.trim();
+            if (!sentence) continue;
+            
+            // If sentence is too long, break it further
+            if (sentence.length > 80) {
+                // Split by commas and other natural breaks
+                let parts = sentence.split(/[,;:]/);
+                if (parts.length > 1) {
+                    for (let part of parts) {
+                        part = part.trim();
+                        if (part) {
+                            // Add ending punctuation if missing
+                            if (!/[.!?]$/.test(part)) part += '.';
+                            chunks.push(part);
+                        }
+                    }
+                } else {
+                    chunks.push(sentence);
+                }
+            } else {
+                chunks.push(sentence);
+            }
+        }
+        
+        // Group short chunks into paragraphs (2-3 sentences per paragraph)
+        let paragraphs = [];
+        let para = [];
+        for (let chunk of chunks) {
+            para.push(chunk);
+            if (para.length >= 2) {
+                paragraphs.push(para.join(' '));
+                para = [];
+            }
+        }
+        if (para.length > 0) {
+            paragraphs.push(para.join(' '));
+        }
+        
+        // Add bullet points for lists
         let result = [];
-        let currentChunk = [];
         let inList = false;
         let listItems = [];
-
-        for (let line of lines) {
-            line = line.trim();
-            
-            if (line.startsWith('-') || line.startsWith('•') || line.startsWith('*')) {
-                if (currentChunk.length > 0) {
-                    result.push(currentChunk.join(' '));
-                    currentChunk = [];
+        
+        for (let para of paragraphs) {
+            // Detect if this is a list item (starts with number or bullet)
+            if (/^[\d•\-*]/.test(para)) {
+                if (!inList) {
+                    if (result.length > 0 && !result[result.length - 1].startsWith('•')) {
+                        result.push('');
+                    }
+                    inList = true;
                 }
-                inList = true;
-                listItems.push(line.replace(/^[-•*]\s*/, ''));
-                continue;
-            }
-
-            if (/^\d+\./.test(line)) {
-                if (currentChunk.length > 0) {
-                    result.push(currentChunk.join(' '));
-                    currentChunk = [];
-                }
-                inList = true;
-                listItems.push(line.replace(/^\d+\.\s*/, ''));
-                continue;
-            }
-
-            if (line.length < 30 && line.endsWith(':')) {
-                if (listItems.length > 0) {
-                    result.push('• ' + listItems.join('\n• '));
+                listItems.push(para.replace(/^[\d•\-*]\s*/, ''));
+            } else {
+                if (inList && listItems.length > 0) {
+                    for (let item of listItems) {
+                        result.push('• ' + item);
+                    }
                     listItems = [];
                     inList = false;
                 }
-                if (currentChunk.length > 0) {
-                    result.push(currentChunk.join(' '));
-                    currentChunk = [];
-                }
-                result.push('📌 ' + line);
-                continue;
-            }
-
-            if (line.match(/^\[.*\]$/)) {
-                if (listItems.length > 0) {
-                    result.push('• ' + listItems.join('\n• '));
-                    listItems = [];
-                    inList = false;
-                }
-                if (currentChunk.length > 0) {
-                    result.push(currentChunk.join(' '));
-                    currentChunk = [];
-                }
-                result.push('🎵 ' + line);
-                continue;
-            }
-
-            currentChunk.push(line);
-            
-            if (line.match(/[.!?]$/)) {
-                if (currentChunk.length > 0) {
-                    let chunk = currentChunk.join(' ');
-                    if (chunk.length > 80) {
-                        let sentences = chunk.match(/[^.!?]+[.!?]/g) || [chunk];
-                        for (let s of sentences) {
-                            if (s.trim()) {
-                                result.push(s.trim());
-                            }
-                        }
-                    } else {
-                        result.push(chunk);
-                    }
-                    currentChunk = [];
-                }
+                result.push(para);
             }
         }
-
-        if (listItems.length > 0) {
-            result.push('• ' + listItems.join('\n• '));
-        }
-        if (currentChunk.length > 0) {
-            let chunk = currentChunk.join(' ');
-            if (chunk.length > 80) {
-                let sentences = chunk.match(/[^.!?]+[.!?]/g) || [chunk];
-                for (let s of sentences) {
-                    if (s.trim()) {
-                        result.push(s.trim());
-                    }
-                }
-            } else {
-                result.push(chunk);
+        
+        if (inList && listItems.length > 0) {
+            for (let item of listItems) {
+                result.push('• ' + item);
             }
         }
-
-        if (result.length === 0) {
-            let sentences = text.match(/[^.!?]+[.!?]/g) || [text];
-            for (let s of sentences) {
-                if (s.trim()) {
-                    result.push(s.trim());
-                }
-            }
-        }
-
-        let finalResult = [];
-        for (let item of result) {
-            if (item.length > 80) {
-                let parts = item.match(/.{1,70}[,;.!?]\s*/g) || [item];
-                for (let p of parts) {
-                    if (p.trim()) {
-                        finalResult.push(p.trim());
-                    }
-                }
-            } else {
-                finalResult.push(item);
-            }
-        }
-
-        return finalResult.join('\n\n');
+        
+        // Join with double newlines for clear separation
+        return result.join('\n\n');
     },
 
     async getResponse(message) {
         const safetyCheck = Safety.check(message);
         if (safetyCheck.blocked) {
-            return this.formatForReadability(safetyCheck.response);
+            return this.forceShortFormat(safetyCheck.response);
         }
 
+        // ⚠️ CRITICAL: STRICT FORMATTING RULES
         const system = `You are NEXUS, an AI created by Turki.
 
-⚠️ STRICT FORMATTING RULES:
+⚠️ STRICT FORMATTING RULES - FOLLOW EXACTLY:
 1. NEVER write more than 2 sentences in a row.
 2. ALWAYS use bullet points for lists (start with -).
 3. ALWAYS put a blank line between ideas.
 4. Keep each sentence UNDER 15 words.
 5. Break long answers into short, bite-sized chunks.
 
-EXAMPLE:
+EXAMPLE OF CORRECT FORMAT:
 "Here are some things you can do in Minecraft.
 
 - Build houses and castles
@@ -548,8 +512,8 @@ Recent: ${State.chatHistory.slice(-3).map(m => `${m.role}: ${m.content}`).join('
                             ...State.chatHistory.slice(-5),
                             { role: 'user', content: message }
                         ],
-                        max_tokens: 800,
-                        temperature: 0.5
+                        max_tokens: 600,
+                        temperature: 0.4
                     })
                 });
 
@@ -557,7 +521,8 @@ Recent: ${State.chatHistory.slice(-3).map(m => `${m.role}: ${m.content}`).join('
                 const data = await response.json();
                 const rawText = data.choices?.[0]?.message?.content || null;
                 if (rawText) {
-                    return this.formatForReadability(rawText);
+                    // ✅ FORCE SHORT FORMAT
+                    return this.forceShortFormat(rawText);
                 }
                 return null;
             } catch (e) {
@@ -678,7 +643,7 @@ const Storage = {
 };
 
 // ================================================================
-// 🎨 UI RENDERER - WITH CHATGPT SEARCH ICON
+// 🎨 UI RENDERER
 // ================================================================
 
 const UI = {
@@ -692,6 +657,7 @@ const UI = {
             formattedText = text.split('\n\n').join('<br><br>');
             formattedText = formattedText.split('\n').join('<br>');
             formattedText = formattedText.replace(/^- (.*?)(<br>|$)/g, '• $1<br>');
+            formattedText = formattedText.replace(/^• (.*?)(<br>|$)/g, '• $1<br>');
         }
 
         if (sender === 'bot') {
@@ -1069,8 +1035,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     Chat.init();
-    console.log('🚀 NEXUS AI - CHATGPT STYLE!');
+    console.log('🚀 NEXUS AI - FORCED SHORT FORMAT!');
     console.log('🔑 Current Code:', State.chatCode);
-    console.log('🌐 Search icon: ChatGPT style');
-    console.log('📝 Short, readable format');
+    console.log('🌐 ChatGPT-style search icon');
+    console.log('📝 Forced short sentences and bullet points');
 });
