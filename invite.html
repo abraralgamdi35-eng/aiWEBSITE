@@ -58,6 +58,23 @@
         .footer { margin-top:24px; color:rgba(255,255,255,0.08); font-size:12px; }
         .invalid-msg { color:#f87171; font-size:14px; margin:10px 0; display:none; }
         .invalid-msg.show { display:block; }
+        .welcome-text {
+            display: inline-block;
+            background: rgba(52, 211, 153, 0.05);
+            border-radius: 20px;
+            padding: 8px 20px;
+            font-size: 13px;
+            color: #34d399;
+            margin-bottom: 16px;
+        }
+        .from-text {
+            color: rgba(255,255,255,0.2);
+            font-size: 13px;
+            margin-top: 8px;
+        }
+        .from-text strong {
+            color: rgba(255,255,255,0.5);
+        }
         @media (max-width:480px) { .invite-card{ padding:30px 24px; } .invite-card h1{ font-size:26px; } .btn-enter{ padding:14px 32px; font-size:16px; } }
     </style>
 </head>
@@ -72,19 +89,27 @@
         <div class="invite-card">
             <span class="envelope">💌</span>
             <span class="badge">✦ Exclusive Access</span>
-            <h1>You're Invited!</h1>
-            <p class="subtitle">Welcome to NEXUS AI</p>
+            
+            <div class="welcome-text">🎉 You've Been Invited!</div>
+            
+            <h1>NEXUS AI</h1>
+            <p class="subtitle">Welcome to your personal AI assistant</p>
+            
             <div class="message">
-                You've been personally invited to try <span>NEXUS AI</span> — a powerful AI assistant with web search, coding help, and memory.
+                You've been personally invited to try <span>NEXUS AI</span> — a powerful AI assistant with web search, coding help, and memory.<br>
+                <span class="from-text">Invited by <strong id="invitedBy">a friend</strong></span>
             </div>
+            
             <div class="features">
                 <div class="feat"><span>🔍</span> Web Search</div>
                 <div class="feat"><span>💻</span> Code Helper</div>
                 <div class="feat"><span>🧠</span> Memory</div>
                 <div class="feat"><span>🔒</span> Private</div>
             </div>
+            
             <div class="invalid-msg" id="invalidMsg">❌ This invite link is invalid or has already been used.</div>
-            <a href="index.html" class="btn-enter">🚀 Enter NEXUS AI</a>
+            <a href="index.html" class="btn-enter" id="enterBtn">🚀 Enter NEXUS AI</a>
+            
             <div class="divider"></div>
             <div class="footer">✦ Built by Turki • 2026</div>
         </div>
@@ -96,32 +121,48 @@
 
         const urlParams = new URLSearchParams(window.location.search);
         const inviteCode = urlParams.get('invite');
-        const isInvalid = urlParams.get('invalid') === 'true';
-
-        const enterBtn = document.querySelector('.btn-enter');
         const invalidMsg = document.getElementById('invalidMsg');
+        const enterBtn = document.getElementById('enterBtn');
 
-        // Always allow access - just show the page
-        // The invite check is optional now
-        
-        // If you want to check invites, uncomment this:
-        /*
+        // Get the inviter's name from URL or use default
+        const inviterName = urlParams.get('from') || 'a friend';
+        document.getElementById('invitedBy').textContent = inviterName;
+
+        // Check if invite code is valid
         const storedCode = localStorage.getItem('nexus_invite_code');
-        if (inviteCode && storedCode && inviteCode === storedCode) {
-            // Valid invite
-            sessionStorage.setItem('nexus_trusted', 'true');
+        
+        if (inviteCode) {
+            // If there's a code in URL, check it
+            if (storedCode && inviteCode === storedCode) {
+                // Valid invite
+                sessionStorage.setItem('nexus_trusted', 'true');
+                sessionStorage.setItem('nexus_invite_code', inviteCode);
+                enterBtn.href = 'index.html';
+                enterBtn.textContent = '🚀 Enter NEXUS AI';
+            } else if (/^[A-Z0-9]{8}$/.test(inviteCode)) {
+                // Valid format - auto-accept
+                localStorage.setItem('nexus_invite_code', inviteCode);
+                sessionStorage.setItem('nexus_trusted', 'true');
+                sessionStorage.setItem('nexus_invite_code', inviteCode);
+                enterBtn.href = 'index.html';
+                enterBtn.textContent = '🚀 Enter NEXUS AI';
+            } else {
+                // Invalid code
+                invalidMsg.classList.add('show');
+                enterBtn.href = '#';
+                enterBtn.textContent = '❌ Invalid Invite';
+                enterBtn.style.opacity = '0.5';
+                enterBtn.style.pointerEvents = 'none';
+            }
+        } else {
+            // No code in URL - still let them in (open access mode)
             enterBtn.href = 'index.html';
-        } else if (inviteCode) {
-            // Invalid invite
-            invalidMsg.classList.add('show');
-            enterBtn.href = '#';
-            enterBtn.textContent = '❌ Invalid Invite';
-            enterBtn.style.opacity = '0.5';
-            enterBtn.style.pointerEvents = 'none';
+            enterBtn.textContent = '🚀 Enter NEXUS AI';
         }
-        */
 
         console.log('💌 NEXUS AI Invitation Page');
+        console.log(`👤 Invited by: ${inviterName}`);
+        console.log(`🔑 Invite Code: ${inviteCode || 'None'}`);
         console.log('🚀 Click Enter to access NEXUS AI');
     </script>
 </body>
